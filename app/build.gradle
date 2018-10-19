@@ -1,0 +1,189 @@
+apply plugin: 'com.android.application'
+//navigation
+apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.lznby.jetpack"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //ARouter and Other like ButterKnife
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName(), AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //JDK1.8
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    //dataBinding
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+
+    //---------------------------------Pre-AndroidX--------------------------------------------
+
+    //lifecycle
+    def lifecycle_version = "1.1.1"
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    // alternatively - just ViewModel
+    implementation "android.arch.lifecycle:viewmodel:$lifecycle_version" // use -ktx for Kotlin
+    // alternatively - just LiveData
+    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
+    // alternatively - Lifecycles only (no ViewModel or LiveData).
+    //     Support library depends on this lightweight import
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version" // use kapt for Kotlin
+    // alternately - if using Java8, use the following instead of compiler
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+    // optional - ReactiveStreams support for LiveData
+    implementation "android.arch.lifecycle:reactivestreams:$lifecycle_version"
+    // optional - Test helpers for LiveData
+    testImplementation "android.arch.core:core-testing:$lifecycle_version"
+
+    //room
+    def room_version = "1.1.1"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
+    // optional - RxJava support for Room
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+//    implementation "android.arch.persistence.room:guava:$room_version"
+    // Test helpers
+    testImplementation "android.arch.persistence.room:testing:$room_version"
+
+    //paging
+    def paging_version = "1.0.0"
+    def paging_rxjava_version = "1.0.1"
+    implementation "android.arch.paging:runtime:$paging_version"
+    // alternatively - without Android dependencies for testing
+    testImplementation "android.arch.paging:common:$paging_version"
+    // optional - RxJava support
+    implementation "android.arch.paging:rxjava2:$paging_rxjava_version"
+
+    //navigation
+    def nav_version = "1.0.0-alpha06"
+    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
+    // optional - Test helpers
+    androidTestImplementation "android.arch.navigation:navigation-testing:$nav_version" // use -ktx for Kotlin
+
+    //workManager
+    def work_version = "1.0.0-alpha10"
+    implementation "android.arch.work:work-runtime:$work_version" // use -ktx for Kotlin
+    // optional - Firebase JobDispatcher support
+    implementation "android.arch.work:work-firebase:$work_version"
+    // optional - Test helpers
+    androidTestImplementation "android.arch.work:work-testing:$work_version"
+
+    //---------------------------------Pre-AndroidX--------------------------------------------
+
+    //------------------------------------other---------------------------------------
+
+    //butter knife
+    def butterKnifeVersion = '9.0.0-rc1'
+    //butter knife
+    implementation "com.jakewharton:butterknife:$butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+
+    //Timber
+    def timberVersion = '4.7.1'
+    //Timber
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    // utilCode
+    // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
+    def utilCodeVersion = '1.21.0'
+    implementation "com.blankj:utilcode:$utilCodeVersion"
+
+    //ARouter
+    def arouterApiVersion = '1.4.0'//'1.3.1'
+    def arouterCompilerVersion = '1.2.1'//'1.1.4'
+    //ARouter
+    implementation "com.alibaba:arouter-api:$arouterApiVersion"
+    annotationProcessor "com.alibaba:arouter-compiler:$arouterCompilerVersion"
+
+    //------------------------------------other---------------------------------------
+
+    //------------------------------------Rx/http----------------------------------
+
+    //RxAndroid
+    def rxAndroidVersion = '2.1.0'
+    //RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    //RxPermissions can not use
+    def rxPermissionsVersion = '0.10.2'
+    //RxPermissions
+    implementation "com.github.tbruyelle:rxpermissions:$rxPermissionsVersion"
+
+    //RxJava2
+    def rxJavaVersion = '2.2.0'
+    //RxJava2
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+
+    //RxLifecycle--can not ues
+    def rxLifecycle = '2.2.2'
+    implementation "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycle"
+    // If you want to bind to Android-specific lifecycles
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android:$rxLifecycle"
+    // If you want pre-written Activities and Fragments you can subclass as providers
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:$rxLifecycle"
+    // If you want pre-written support preference Fragments you can subclass as providers
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components-preference:$rxLifecycle"
+    // If you want to use Navi for providers
+    implementation "com.trello.rxlifecycle2:rxlifecycle-navi:$rxLifecycle"
+    // If you want to use Android Lifecycle for providers
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$rxLifecycle"
+
+
+    //okHttp interceptor
+    def loggingInterceptorVersion = '3.8.0'
+    //okHttp logging interceptor retrofit
+    implementation "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion"
+
+    //Retrofit
+    def retrofitVersion = '2.4.0'
+    //retrofit2
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+
+    //Glide
+    def glideVersion = '4.7.1'
+    //glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+    //Gson
+    def gsonVersion = '2.8.5'
+    //Gson
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    //------------------------------------Rx/http------------------------------------
+}
