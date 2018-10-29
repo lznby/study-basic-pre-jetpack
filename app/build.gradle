@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-//navigation
 apply plugin: "androidx.navigation.safeargs"
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: "androidx.navigation.safeargs"
@@ -24,6 +23,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        //Timber
+        debug {
+            debuggable true
         }
     }
     //JDK1.8

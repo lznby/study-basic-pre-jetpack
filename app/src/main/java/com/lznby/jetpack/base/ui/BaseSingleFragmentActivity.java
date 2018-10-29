@@ -1,4 +1,4 @@
-package com.lznby.jetpack.base;
+package com.lznby.jetpack.base.ui;
 
 
 import android.os.Bundle;
@@ -6,10 +6,12 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 
+import com.lznby.jetpack.base.vm.BaseViewModel;
+
 /**
  * @author Lznby
  */
-public abstract class BaseSingleFragmentActivity <T extends BaseFragment> extends BaseActivity {
+public abstract class BaseSingleFragmentActivity<T extends BaseViewModel, K, F extends BaseFragment> extends BaseActivity<T, K> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,12 +22,12 @@ public abstract class BaseSingleFragmentActivity <T extends BaseFragment> extend
         // Get fragmentManager
         FragmentManager fragmentManager = getSupportFragmentManager();
         //Get fragment by findFragmentById.
-        T fragment = (T)fragmentManager.findFragmentById(setContainer());
+        F fragment = (F) fragmentManager.findFragmentById(setContainer());
         //Add fragment to fragmentManager.
         if (fragment == null) {
             fragment = createFragment();
             fragmentManager.beginTransaction()
-                    .add(setContainer(),fragment)
+                    .add(setContainer(), fragment)
                     .commit();
         }
 
@@ -33,10 +35,10 @@ public abstract class BaseSingleFragmentActivity <T extends BaseFragment> extend
 
     /**
      * Return A fragment be used to inflate in container.
+     *
      * @return A fragment extends BaseFragment.
      */
-    protected abstract T createFragment();
-
+    protected abstract F createFragment();
 
 
     /**

@@ -1,4 +1,4 @@
-package com.lznby.jetpack.configure;
+package com.lznby.jetpack.base.configure;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;

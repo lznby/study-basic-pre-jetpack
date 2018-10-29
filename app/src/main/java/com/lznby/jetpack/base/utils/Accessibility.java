@@ -1,4 +1,4 @@
-package com.lznby.jetpack.utils;
+package com.lznby.jetpack.base.utils;
 
 import android.Manifest;
 import android.app.Activity;

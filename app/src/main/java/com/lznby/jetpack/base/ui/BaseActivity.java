@@ -1,12 +1,17 @@
-package com.lznby.jetpack.base;
+package com.lznby.jetpack.base.ui;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.lznby.jetpack.base.vm.BaseViewModel;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import java.lang.reflect.ParameterizedType;
 
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
@@ -15,13 +20,17 @@ import io.reactivex.internal.disposables.ListCompositeDisposable;
 /**
  * @author Lznby
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BaseViewModel,K> extends AppCompatActivity {
 
     /**
      * Manage rxJava lifecycle be use to release when activity onDestroy.
      */
     public ListCompositeDisposable list = new ListCompositeDisposable();
 
+    /**
+     * ViewModel
+     */
+    protected T viewModel;
 
     /**
      * Request permission by rxPermissions.
@@ -36,6 +45,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(setLayout());
         // Bind ButterKnife
         ButterKnife.bind(this);
+        // configure viewModel
+        viewModel = ViewModelProviders.of(this).get(getClazz());
+        viewModel.setGetActivityCallback(() -> this);
+        final Observer<K> observable = this::bindView;
+        viewModel.getLiveData().observe(this,observable);
         // Do something when activity lifecycle was 'OnCreate'.
         doOnCreate();
     }
@@ -48,6 +62,26 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * This method was used to set fragment'layoutRes that like R.layout.xxx.
+     *
+     * @return And this layout.xml have a FrameLayout view was used to inflate fragment.
+     */
+    public abstract @LayoutRes
+    int setLayout();
+
+    /**
+     * do something when LiveData data was be changed
+     * @param entity
+     */
+    abstract protected void bindView(K entity);
+
+    /**
+     * This method be used to do something when activity lifecycle was 'OnCreate'.
+     */
+    protected abstract void doOnCreate();
+
+
+    /**
      * Collect rxJava'disposable.
      *
      * @param disposable from rxJava'Observable return result.
@@ -57,17 +91,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * This method was used to set fragment'layoutRes that like R.layout.xxx.
-     *
-     * @return And this layout.xml have a FrameLayout view was used to inflate fragment.
-     */
-    public abstract @LayoutRes
-    int setLayout();
+
 
     /**
-     * This method be used to do something when activity lifecycle was 'OnCreate'.
+     * 获取 T.class
+     *
+     * @return
      */
-    protected abstract void doOnCreate();
+    @SuppressWarnings("unchecked")
+    private Class<T> getClazz() {
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
+
+
 
 }
