@@ -1,4 +1,30 @@
 <resources>
     <string name="app_name">jetpack</string>
     <string name="save">保存</string>
+
+    <!-- 我的项目 -->
+    <string name="mine">我的</string>
+    <string name="discovery">发现</string>
+    <string name="subscribe">订阅</string>
+    <string name="home">首页</string>
+    <string name="follower">粉丝</string>
+    <string name="following">关注</string>
+    <string name="dynamic">动态</string>
+    <string name="default_size">0</string>
+    <string name="default_nickname">点击登录账号</string>
+    <string name="mine_love">我的收藏</string>
+    <string name="mine_theme">创建主题</string>
+    <string name="mine_message">我的消息</string>
+    <string name="setting">设置</string>
+    <string name="back">返回</string>
+    <string name="account_manager">账号管理</string>
+    <string name="personal_information">个人信息</string>
+    <string name="edit">编辑</string>
+    <string name="account_information">账号信息</string>
+    <string name="update_password">修改密码</string>
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="re_password">确认密码</string>
+    <string name="login_out">退出登录</string>
+
 </resources>

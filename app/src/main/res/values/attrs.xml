@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 自定义属性控件-可控制图片大小的TextView -->
+    <declare-styleable name="ImageTextView">
+        <attr name="drawableLeftWidth" format="dimension"/>
+        <attr name="drawableLeftHeight" format="dimension"/>
+        <attr name="drawableTopWidth" format="dimension"/>
+        <attr name="drawableTopHeight" format="dimension"/>
+        <attr name="drawableRightWidth" format="dimension"/>
+        <attr name="drawableRightHeight" format="dimension"/>
+        <attr name="drawableBottomWidth" format="dimension"/>
+        <attr name="drawableBottomHeight" format="dimension"/>
+    </declare-styleable>
+
+    <!-- 自定义控件-标题加内容加图片的控件 -->
+    <declare-styleable name="TitleEditText">
+        <attr name="titleText" format="string"/>
+        <attr name="contentText" format="string"/>
+        <attr name="imageSrc" format="reference"/>
+
+        <!-- 布局Margin -->
+        <attr name="layoutMarginTop" format="dimension"/>
+        <attr name="layoutMarginButton" format="dimension"/>
+        <attr name="layoutMarginLeft" format="dimension"/>
+        <attr name="layoutMarginRight" format="dimension"/>
+
+        <!-- 标题Margin -->
+        <attr name="contentMarginLeft" format="dimension"/>
+        <attr name="contentMarginRight" format="dimension"/>
+
+        <!-- 图片Size -->
+        <attr name="imageWidth" format="dimension"/>
+        <attr name="imageHeight" format="dimension"/>
+        <!-- 标题和内容字体大小 -->
+        <attr name="textSize" format="dimension"/>
+        <attr name="leftTitleTextColor" format="reference"/>
+        <attr name="contentTextColor" format="reference"/>
+
+        <!--设置EditText编辑状态-->
+        <attr name="enable" format="boolean"/>
+
+    </declare-styleable>
+
+</resources>

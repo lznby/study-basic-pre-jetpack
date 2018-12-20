@@ -23,7 +23,11 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
         }
     }
     //JDK1.8
@@ -39,11 +43,41 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    def supportLibraryVersion = '28.0.0'
+
+    //-------------------------------------UI------------------------------------------
+
+    def circleImageViewVersion = '2.2.0'
+    implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
+    def viewHolderVersion = '2.9.31'
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$viewHolderVersion"
+
+    //---------------------------------- Supper UI-------------------------------------
+
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "com.android.support:support-vector-drawable:$supportLibraryVersion"
+    implementation "com.android.support:support-v4:$supportLibraryVersion"
+    implementation "com.android.support:support-v13:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    //floating search View
+    implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    //----------------------------------------------------------------------------------
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    //---------------------------------OSS--------------------------------------------------
+    def ossVersion = '2.9.1'
+    implementation "com.aliyun.dpa:oss-android-sdk:$ossVersion"
+//    def okhttpVersion = '3.11.0'
+//    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+//    def okioVersion = '1.14.0'
+//    implementation "com.squareup.okio:okio:$okioVersion"
 
     //---------------------------------Pre-AndroidX--------------------------------------------
 
@@ -69,7 +103,8 @@ dependencies {
     //room
     def room_version = "1.1.1"
     implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    // use kapt for Kotlin
     // optional - RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:$room_version"
     // optional - Guava support for Room, including Optional and ListenableFuture
@@ -91,7 +126,8 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
     // optional - Test helpers
-    androidTestImplementation "android.arch.navigation:navigation-testing:$nav_version" // use -ktx for Kotlin
+    androidTestImplementation "android.arch.navigation:navigation-testing:$nav_version"
+    // use -ktx for Kotlin
 
     //workManager
     def work_version = "1.0.0-alpha10"
@@ -161,7 +197,6 @@ dependencies {
     // If you want to use Android Lifecycle for providers
     implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:$rxLifecycle"
 
-
     //okHttp interceptor
     def loggingInterceptorVersion = '3.8.0'
     //okHttp logging interceptor retrofit
@@ -176,9 +211,10 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
 
     //Glide
-    def glideVersion = '4.7.1'
+    def glideVersion = '4.8.0'
     //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 
     //Gson
     def gsonVersion = '2.8.5'

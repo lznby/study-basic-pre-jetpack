@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite2"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:elevation="4dp"
+                app:titleTextColor="@color/colorWhite">
+
+                <TextView
+                    style="@style/toolbar_font_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="24dp"
+                    android:text="@string/mine"/>
+
+                <ImageView
+                    android:id="@+id/iv_setting"
+                    style="@style/toolbar_click_style"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="8dp"
+                    android:src="@mipmap/icon_setting"
+                    android:text="@string/setting"/>
+
+
+            </android.support.v7.widget.Toolbar>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/click_layout"
+                android:clickable="true"
+                android:focusable="true"
+                tools:layout_editor_absoluteY="64dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_header"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@mipmap/icon_default_header"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/default_nickname"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_header"
+                    app:layout_constraintTop_toTopOf="@+id/iv_header"/>
+
+
+                <TextView
+                    android:id="@+id/tv_motto"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_nickname"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_nickname"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_dynamic"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/click_layout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/tv_dynamic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/default_size"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_dynamic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dynamic"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_following"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/click_layout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/tv_following"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/default_size"/>
+
+                    <TextView
+                        android:id="@+id/tv_title_following"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/following"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_follower"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/click_layout"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/tv_follower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/default_size"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_title_follower"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_title_follower"
+                        app:layout_constraintStart_toStartOf="@+id/tv_title_follower"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_title_follower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/follower"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_title_following"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.lznby.jetpack.content.design.view.ImageTextView
+                android:id="@+id/itv_mine_love"
+                style="@style/image_text_view_left"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@mipmap/icon_mine_love"
+                android:text="@string/mine_love"
+                app:drawableLeftWidth="30dp"
+                app:drawableRightHeight="30dp"/>
+
+            <com.lznby.jetpack.content.design.view.ImageTextView
+                android:id="@+id/itv_mine_message"
+                style="@style/image_text_view_left"
+                android:drawableLeft="@mipmap/icon_mine_message"
+                android:text="@string/mine_message"
+                app:drawableLeftWidth="30dp"
+                app:drawableRightHeight="30dp"/>
+
+            <com.lznby.jetpack.content.design.view.ImageTextView
+                android:id="@+id/itv_mine_theme"
+                style="@style/image_text_view_left"
+                android:drawableLeft="@mipmap/icon_mine_theme"
+                android:text="@string/mine_theme"
+                app:drawableLeftWidth="30dp"
+                app:drawableRightHeight="30dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

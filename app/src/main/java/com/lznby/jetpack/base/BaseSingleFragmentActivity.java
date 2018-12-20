@@ -9,9 +9,10 @@ import android.support.v4.app.FragmentManager;
 /**
  * @author Lznby
  */
-public abstract class BaseSingleFragmentActivity <T extends BaseFragment> extends BaseActivity {
+public abstract class BaseSingleFragmentActivity <T extends BaseActivityViewModel,K,F extends BaseFragment> extends BaseActivity<T,K> {
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -20,7 +21,7 @@ public abstract class BaseSingleFragmentActivity <T extends BaseFragment> extend
         // Get fragmentManager
         FragmentManager fragmentManager = getSupportFragmentManager();
         //Get fragment by findFragmentById.
-        T fragment = (T)fragmentManager.findFragmentById(setContainer());
+        F fragment = (F)fragmentManager.findFragmentById(setContainer());
         //Add fragment to fragmentManager.
         if (fragment == null) {
             fragment = createFragment();
@@ -35,7 +36,7 @@ public abstract class BaseSingleFragmentActivity <T extends BaseFragment> extend
      * Return A fragment be used to inflate in container.
      * @return A fragment extends BaseFragment.
      */
-    protected abstract T createFragment();
+    protected abstract F createFragment();
 
 
 

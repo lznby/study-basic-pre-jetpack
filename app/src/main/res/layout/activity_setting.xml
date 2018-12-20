@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:title=""
+        app:titleTextColor="@color/colorWhite">
+
+        <TextView
+            style="@style/toolbar_font_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="24dp"
+            android:text="@string/setting"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <com.lznby.jetpack.content.design.view.ImageTextView
+            android:id="@+id/itv_account_manager"
+            style="@style/image_text_view_right"
+            android:layout_marginTop="16dp"
+            android:text="@string/account_manager"
+            app:drawableRightHeight="30dp"
+            app:drawableRightWidth="30dp"/>
+
+        <com.lznby.jetpack.content.design.view.ImageTextView
+            android:id="@+id/itv_personal_info"
+            style="@style/image_text_view_right"
+            android:text="@string/personal_information"
+            app:drawableRightHeight="30dp"
+            app:drawableRightWidth="30dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_login_out"
+        android:padding="8dp"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/login_out"
+        android:textColor="@color/colorRed"
+        android:background="@drawable/click_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:focusable="true"/>
+
+
+
+</LinearLayout>

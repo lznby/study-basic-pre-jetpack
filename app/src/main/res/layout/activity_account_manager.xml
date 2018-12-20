@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:title=""
+        app:titleTextColor="@color/colorWhite">
+
+        <TextView
+            style="@style/toolbar_font_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="24dp"
+            android:text="@string/account_manager"/>
+
+        <TextView
+            android:id="@+id/tv_save"
+            style="@style/toolbar_click_style"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            android:text="@string/save"/>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <com.lznby.jetpack.content.design.view.ImageTextView
+        android:drawableLeft="@drawable/left_line_orange"
+        android:text="@string/update_password"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:gravity="center_vertical"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="8dp"
+        app:drawableLeftWidth="5dp"/>
+
+    <com.lznby.jetpack.content.design.view.TitleEditText
+        style="@style/personal_info_style"
+        android:id="@+id/tet_old_pass"
+        app:imageSrc="@mipmap/icon_right_arrows"
+        app:titleText="@string/old_password"
+        app:contentTextColor="@color/defaultEditTextColor"
+        app:enable="true"
+        app:layoutMarginLeft="14dp"
+        app:layoutMarginTop="6dp"
+        app:layoutMarginRight="8dp"
+        app:layoutMarginButton="6dp"
+        app:contentMarginLeft="8dp"
+        app:imageWidth="24dp"
+        app:imageHeight="24dp"
+        app:textSize="14sp"/>
+
+    <com.lznby.jetpack.content.design.view.TitleEditText
+        style="@style/personal_info_style"
+        android:id="@+id/tet_new_pass"
+        app:imageSrc="@mipmap/icon_right_arrows"
+        app:titleText="@string/new_password"
+        app:enable="true"
+        app:contentTextColor="@color/defaultEditTextColor"
+        app:layoutMarginLeft="14dp"
+        app:layoutMarginTop="6dp"
+        app:layoutMarginRight="8dp"
+        app:layoutMarginButton="6dp"
+        app:contentMarginLeft="8dp"
+        app:imageWidth="24dp"
+        app:imageHeight="24dp"
+        app:textSize="14sp"/>
+
+    <com.lznby.jetpack.content.design.view.TitleEditText
+        style="@style/personal_info_style"
+        android:id="@+id/tet_re_pass"
+        app:imageSrc="@mipmap/icon_right_arrows"
+        app:titleText="@string/re_password"
+        app:enable="true"
+        app:contentTextColor="@color/defaultEditTextColor"
+        app:layoutMarginLeft="14dp"
+        app:layoutMarginTop="6dp"
+        app:layoutMarginRight="8dp"
+        app:layoutMarginButton="6dp"
+        app:contentMarginLeft="8dp"
+        app:imageWidth="24dp"
+        app:imageHeight="24dp"
+        app:textSize="14sp"/>
+
+
+</LinearLayout>

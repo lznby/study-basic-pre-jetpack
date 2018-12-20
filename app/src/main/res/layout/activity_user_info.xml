@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        app:title=""
+        app:titleTextColor="@color/colorWhite">
+
+        <TextView
+            style="@style/toolbar_font_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="24dp"
+            android:text="@string/personal_information"/>
+
+        <TextView
+            android:id="@+id/tv_edit"
+            style="@style/toolbar_click_style"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            android:text="@string/edit"/>
+
+    </android.support.v7.widget.Toolbar>
+
+      <ScrollView
+          android:background="@color/colorWhite2"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+
+          <LinearLayout
+              android:divider="@drawable/divider"
+              android:showDividers="middle"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+              <com.lznby.jetpack.content.design.view.ImageTextView
+                  android:drawableLeft="@drawable/left_line_orange"
+                  android:text="@string/account_information"
+                  android:paddingTop="4dp"
+                  android:paddingBottom="4dp"
+                  android:gravity="center_vertical"
+                  android:background="@color/colorWhite"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:drawablePadding="8dp"
+                  app:drawableLeftWidth="5dp"/>
+
+
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_user_id"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="账号"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_nick_name"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="昵称"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+
+              <com.lznby.jetpack.content.design.view.ImageTextView
+                  android:layout_marginTop="8dp"
+                  android:drawableLeft="@drawable/left_line_orange"
+                  android:text="@string/personal_information"
+                  android:paddingTop="4dp"
+                  android:paddingBottom="4dp"
+                  android:gravity="center_vertical"
+                  android:background="@color/colorWhite"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:drawablePadding="8dp"
+                  app:drawableLeftWidth="5dp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_sex"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="性别"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_birthday"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="生日"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_age"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="年龄"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_country"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="国家"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_city"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="所在城市"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_school"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="学校"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_eduction"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="学历"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_email"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="邮箱"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+              <com.lznby.jetpack.content.design.view.TitleEditText
+                  style="@style/personal_info_style"
+                  android:id="@+id/tet_tel"
+                  app:imageSrc="@mipmap/icon_right_arrows"
+                  app:titleText="电话"
+                  app:contentTextColor="@color/defaultEditTextColor"
+                  app:layoutMarginLeft="14dp"
+                  app:layoutMarginTop="6dp"
+                  app:layoutMarginRight="8dp"
+                  app:layoutMarginButton="6dp"
+                  app:contentMarginLeft="8dp"
+                  app:imageWidth="24dp"
+                  app:imageHeight="24dp"
+                  app:textSize="14sp"/>
+
+          </LinearLayout>
+
+      </ScrollView>
+</LinearLayout>

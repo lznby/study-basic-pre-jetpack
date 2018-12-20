@@ -4,11 +4,21 @@ import android.app.Application;
 import android.content.Context;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.lznby.jetpack.content.design.configure.Api;
+import com.lznby.jetpack.net.ApiUtils;
+import com.lznby.jetpack.utils.TimberUtil;
+
+import timber.log.Timber;
 
 /**
  * @author Lznby
  */
 public class IApplication extends Application {
+
+    /**
+     * 网络请求Api
+     */
+    public static Api api;
 
     /**
      * 标识是否为调试
@@ -43,10 +53,23 @@ public class IApplication extends Application {
         // 尽可能早，推荐在Application中初始化
         ARouter.init( this);
 
-        /**
-         * 获取Application的Context
-         */
+        //获取Application的Context
         context = getApplicationContext();
+
+        // 尽可能早，推荐在Application中初始化
+        ARouter.init(this);
+
+        // 设置log自动在apk为debug版本时打开，在release版本时关闭
+        TimberUtil.setLogAuto();
+
+        //也可以设置log一直开
+        //TimberUtil.setLogDebug();
+
+        // 打印tag为类名
+        Timber.v("---onCreate---");
+
+        //全局调用网络请求
+        api = ApiUtils.INSTANCE.getApi(this);
     }
 
     /**

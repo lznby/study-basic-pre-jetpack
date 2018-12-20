@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_layout"
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent">
+    <!-- 组合自定义控件-标题和内容加图片的TitleTextView -->
+
+    <TextView
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:minWidth="60dp"
+        android:layout_width="wrap_content"
+        android:textColor="@color/defaultTextColor"
+        android:id="@+id/itv_left"
+        />
+
+    <EditText
+        android:id="@+id/et_content"
+        android:textColor="@color/defaultTextColor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="14sp"
+        android:background="@null"
+        android:layout_gravity="center_vertical"
+        android:enabled="false"
+        />
+
+    <ImageView
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/itv_right"/>
+
+</LinearLayout>
