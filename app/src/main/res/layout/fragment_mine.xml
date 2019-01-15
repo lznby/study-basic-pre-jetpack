@@ -57,14 +57,13 @@
                 tools:layout_editor_absoluteY="64dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_header"
+                    android:id="@+id/civ_header"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@mipmap/icon_default_header"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
@@ -78,8 +77,8 @@
                     android:layout_marginEnd="8dp"
                     android:text="@string/default_nickname"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iv_header"
-                    app:layout_constraintTop_toTopOf="@+id/iv_header"/>
+                    app:layout_constraintStart_toEndOf="@+id/civ_header"
+                    app:layout_constraintTop_toTopOf="@+id/civ_header"/>
 
 
                 <TextView

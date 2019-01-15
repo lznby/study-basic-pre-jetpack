@@ -41,4 +41,34 @@
 
     </declare-styleable>
 
+    <!-- 自定义组合输入框 -->
+    <declare-styleable name="LoginEditText">
+        <!-- 标题属性设置 -->
+        <attr name="title_text" format="string|integer"/>
+        <attr name="title_text_color" format="integer"/>
+
+        <!-- 输入属性设置 -->
+        <attr name="edit_text_hint" format="string|integer"/>
+        <attr name="edit_text_input_type" format="boolean"/>
+
+        <!-- 图标属性设置 -->
+        <attr name="image_bg_src" format="reference"/>
+        <attr name="image_bg_visible" format="boolean"/>
+
+        <!-- View属性设置 -->
+        <attr name="view_bg_src" format="reference"/>
+
+    </declare-styleable>
+
+
+    <!-- 自动计算图片宽高比 -->
+    <declare-styleable name="RatioImageView">
+        <attr name="ratio" format="float"/>
+    </declare-styleable>
+
+    <!-- 九宫格图片加载 -->
+    <declare-styleable name="NineGridLayout">
+        <attr name="sapcing" format="dimension"/>
+    </declare-styleable>
+
 </resources>

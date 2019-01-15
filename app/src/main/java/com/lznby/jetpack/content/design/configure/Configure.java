@@ -82,6 +82,10 @@ public interface Configure {
          * user follower content.
          */
         String SP_FOLLOWER_CONTENT = "SP_FOLLOWER_CONTENT";
+        /**
+         * oss sts token.
+         */
+        String SP_OSS_TOKEN = "SP_OSS_TOKEN";
     }
 
     /**

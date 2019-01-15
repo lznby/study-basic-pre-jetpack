@@ -9,6 +9,8 @@ import com.lznby.jetpack.R;
 import com.lznby.jetpack.utils.ToastUtils;
 
 /**
+ * Recycle empty layout.
+ *
  * @author Lznby
  */
 public class EmptyRvPage {

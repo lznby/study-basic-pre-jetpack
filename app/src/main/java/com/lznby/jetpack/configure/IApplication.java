@@ -2,13 +2,12 @@ package com.lznby.jetpack.configure;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lznby.jetpack.content.design.configure.Api;
 import com.lznby.jetpack.net.ApiUtils;
 import com.lznby.jetpack.utils.TimberUtil;
-
-import timber.log.Timber;
 
 /**
  * @author Lznby
@@ -65,8 +64,10 @@ public class IApplication extends Application {
         //也可以设置log一直开
         //TimberUtil.setLogDebug();
 
-        // 打印tag为类名
-        Timber.v("---onCreate---");
+        //7.0 关于 FileUriExposedException 错误
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
 
         //全局调用网络请求
         api = ApiUtils.INSTANCE.getApi(this);

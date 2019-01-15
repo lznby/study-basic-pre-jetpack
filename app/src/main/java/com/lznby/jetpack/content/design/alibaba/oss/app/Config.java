@@ -15,7 +15,8 @@ public class Config {
     public static final String callbackAddress = "http://oss-demo.aliyuncs.com:23450";
     // STS 鉴权服务器地址，使用前请参照文档 https://help.aliyun.com/document_detail/31920.html 介绍配置STS 鉴权服务器地址。
     // 或者根据工程sts_local_server目录中本地鉴权服务脚本代码启动本地STS 鉴权服务器。详情参见sts_local_server 中的脚本内容。
-    public static final String STSSERVER = "http://172.16.66.119:8080/oss/sts";//STS 地址
+    public static final String STSSERVER = "http://39.108.138.218/android/oss/sts";//STS 地址
+    public static final String ACCESS_ADDRESS = "https://lznby-image.oss-cn-shenzhen.aliyuncs.com/";//图片访问基本基础路径
 
     public static final String uploadFilePath = ""; //本地文件上传地址
     public static final String bucket = "lznby-image";

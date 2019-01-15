@@ -15,6 +15,10 @@
     <!--  -->
     <color name="defaultEditTextColor">#111111</color>
     <color name="followerBottomBlue">#01A0F8</color>
+    <color name="followerBottomDarkBlue">#FF0191F8</color>
     <color name="followerBottomGray">#8E8E8E</color>
     <color name="colorRed">#FF0000</color>
+
+    <!-- image selector view -->
+    <color name="colorFSix">#f6f6f6</color>
 </resources>

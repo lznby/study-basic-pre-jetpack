@@ -1,7 +1,10 @@
 package com.lznby.jetpack.content.design.configure;
 
 import com.lznby.jetpack.base.BaseEntity;
+import com.lznby.jetpack.content.design.alibaba.oss.model.StsModel;
+import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.LoginEntity;
+import com.lznby.jetpack.content.design.entity.PersonalHomePageEntity;
 import com.lznby.jetpack.content.design.entity.UserBaseInfoEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerInfoEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerSizeEntity;
@@ -10,12 +13,15 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -30,7 +36,7 @@ public interface Api {
     /**
      * 公司局域网IP
      */
-//    String HOST = "http://172.16.66.111:8080";
+//    String HOST = "http://172.16.66.141:8080";
 
     /**
      * 阿里云公网IP
@@ -191,6 +197,70 @@ public interface Api {
             @Field("followId") int followId
     );
 
+    /**
+     * OSS Sts Service.
+     */
+    @GET("oss/sts")
+    Observable<BaseEntity<StsModel>> getOssSts();
 
+
+    /**
+     * 多文件上传
+     * https://www.daidingkang.cc/2016/06/17/Retrofit2-network-framework-parsing/
+     *
+     * @param parts 含图片
+     * @return
+     */
+    @Multipart
+    @POST("fileUpload/uploadImage")
+    Observable<BaseEntity> uploadImage(@Part MultipartBody.Part[] parts);
+
+    /**
+     * 根据用户Id获取用户的主页
+     *
+     * @param userCookies   用户Cookies可为空
+     * @param userId        用户Id必选
+     * @return
+     */
+    @GET("userBaseInfo/getPersonalHomePage")
+    Observable<BaseEntity<PersonalHomePageEntity>> getPersonalHomePage(
+            @Header("userCookies") String userCookies,
+            @Query("userId") String userId
+    );
+
+    /**
+     * 上传资讯,文件存储到OSS服务器
+     *
+     * @param userCookies     用户Cookies值
+     * @param files           OSS文件名(List<String>的Json)
+     * @param title           资讯标题(可以为空)
+     * @param content         资讯内容
+     * @param themeId         主题Id(List<String>的Json)
+     * @param type            资讯文件类型
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/createArticleByOss")
+    Observable<BaseEntity> createArticle(
+            @Header("userCookies") String userCookies,
+            @Field("files") String files,
+            @Field("title") String title,
+            @Field("content") String content,
+            @Field("themeId") String themeId,
+            @Field("type") String type
+    );
+
+    /**
+     * 根据资讯编号获取资讯详情
+     *
+     * @param userCookies          浏览者Cookies
+     * @param fileAttribution      资讯Id
+     * @return
+     */
+    @GET("article/getArticleByFileAttribution")
+    Observable<BaseEntity<List<ArticleAllInfoEntity>>> getArticleByFileAttribution(
+            @Header("userCookies") String userCookies,
+            @Query("fileAttribution") String fileAttribution
+    );
 
 }

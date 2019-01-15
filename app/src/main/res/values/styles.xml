@@ -11,6 +11,11 @@
     <style name="AppTheme" parent="Base.AppTheme"/>
     <style name="AppTheme.Translucent" parent="Base.AppTheme"/>
 
+    <style name="AppTheme.NoStatusBar" parent="Base.AppTheme">
+        <!-- statusBarColor no color -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
     <!-- font style -->
     <style name="toolbar_font_style">
         <item name="android:textSize">16sp</item>
@@ -67,6 +72,50 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <!-- font style -->
+    <style name="home_page_nickname_font">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- follower font style -->
+    <style name="follower_font">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- follower font style -->
+    <style name="motto_font">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- create article content font -->
+    <style name="create_article_font">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/gray_active_icon</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- image textView left style -->
+    <style name="image_text_action">
+        <item name="android:clickable">true</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/click_layout</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">8dp</item>
     </style>
 
 </resources>

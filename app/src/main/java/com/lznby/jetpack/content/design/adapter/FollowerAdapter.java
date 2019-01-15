@@ -19,7 +19,6 @@ import com.lznby.jetpack.utils.ToastUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import timber.log.Timber;
 
 /**
  * @author Lznby
@@ -39,15 +38,11 @@ public class FollowerAdapter extends BaseQuickAdapter<UserFollowerInfoEntity,Bas
         this.params = params;
     }
 
-
     @Override
     protected void convert(BaseViewHolder helper, UserFollowerInfoEntity item) {
         helper.setText(R.id.tv_nickname,item.getUserNickName());
         helper.setText(R.id.tv_motto,item.getUserMotto());
         Glide.with(context).load(item.getUserHeaderUrl()).into((CircleImageView) helper.getView(R.id.civ_header));
-
-        Timber.e("%s", helper.getLayoutPosition());
-
         // check is already follow.
         Button btFollow = helper.getView(R.id.bt_follow);
         if (item.getIsFollow() == 1) {

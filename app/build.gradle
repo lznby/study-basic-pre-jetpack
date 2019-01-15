@@ -52,6 +52,15 @@ dependencies {
     implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
     def viewHolderVersion = '2.9.31'
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:$viewHolderVersion"
+    def MultiImageSelector = '1.2'
+    implementation "com.github.lovetuzitong:MultiImageSelector:$MultiImageSelector"
+    def MatisseVersion = '0.5.2-beta4'
+    implementation "com.zhihu.android:matisse:$MatisseVersion"
+
+    // refresh view
+    def smartRefresh = '1.1.0-andx-2'
+    implementation "com.scwang.smartrefresh:SmartRefreshLayout:$smartRefresh"
+    implementation "com.scwang.smartrefresh:SmartRefreshHeader:$smartRefresh"
 
     //---------------------------------- Supper UI-------------------------------------
 
@@ -164,6 +173,12 @@ dependencies {
     implementation "com.alibaba:arouter-api:$arouterApiVersion"
     annotationProcessor "com.alibaba:arouter-compiler:$arouterCompilerVersion"
 
+    //图片压缩
+    implementation 'id.zelory:compressor:2.1.0'
+
+    // Video
+    implementation 'com.shuyu:GSYVideoPlayer:6.0.2'
+
     //------------------------------------other---------------------------------------
 
     //------------------------------------Rx/http----------------------------------
@@ -212,9 +227,12 @@ dependencies {
 
     //Glide
     def glideVersion = '4.8.0'
+    def glideTransformations = '4.0.1'
     //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    //Glide 高斯模糊、毛玻璃效果
+    implementation "jp.wasabeef:glide-transformations:$glideTransformations"
 
     //Gson
     def gsonVersion = '2.8.5'

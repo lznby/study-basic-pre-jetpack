@@ -31,7 +31,7 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.iv_header)
+    @BindView(R.id.civ_header)
     CircleImageView mIvHeader;
     @BindView(R.id.tv_nickname)
     TextView mTvNickname;
@@ -112,13 +112,17 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     }
 
     void mineHomeRouter() {
-        RouterConfigure.isLoginRouter(viewModel.activity.getActivity(), new SimpleCallback() {
-            @Override
-            public void doSomething() {
-                //跳转到个人主页
-                toastUtils("个人主页");
-            }
-        });
+
+        RouterConfigure.checkLoginRouterUtils(viewModel.activity.getActivity(), HomePageActivity.class);
+
+//        RouterConfigure.isLoginRouter(viewModel.activity.getActivity(), new SimpleCallback() {
+//            @Override
+//            public void doSomething() {
+//                //跳转到个人主页
+//                toastUtils("个人主页");
+//            }
+//        });
+
     }
 
     void mineDynamicRouter() {
