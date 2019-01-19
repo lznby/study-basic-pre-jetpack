@@ -28,7 +28,7 @@ public class HomeViewModel extends BaseFragmentViewModel<MainHomeFragment,Center
     public void onCreate() {
         super.onCreate();
         // 获取OSS存储地址
-        getOssToken();
+//        getOssToken();
     }
 
     private void getOssToken() {

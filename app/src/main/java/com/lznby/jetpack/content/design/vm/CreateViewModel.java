@@ -51,7 +51,7 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
      * 从Sts服务器获取OSS动态口令
      */
     private void getStsFromService() {
-        list.add(
+        addDisposable(
                 IApplication.api.getOssSts()
                 .observeOn(Schedulers.io())
                 .subscribe(o->sts = o.getData(),Throwable::printStackTrace)
@@ -65,9 +65,8 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
      */
     public void uploadImage(List<String> urls,String title,String content,String themeId) {
         List<String> ossUrls = new ArrayList<>();
-        list.add(
+        addDisposable(
                 Flowable.fromIterable(urls)
-                        .observeOn(Schedulers.io())
                         .map(File::new)
                         .map(o -> {
                             //根据上传文件类型确定处理过程
@@ -81,7 +80,6 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
                                 default:
                                     return o;
                             }
-
                         })
                         .doOnNext(
                                 // 上传压缩后的图片到到Oss服务器
@@ -90,7 +88,7 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
                         .doOnComplete(() -> {
                             Gson gson = new Gson();
                             String ossJson = gson.toJson(ossUrls);
-                            String type = ossUrls!=null?FileUtils.getType(ossUrls.get(0)):FileUtils.IMAGE;
+                            String type = ossUrls.size()>0?FileUtils.getType(ossUrls.get(0)):FileUtils.IMAGE;
                             // 执行资讯创建步骤
                             createArticle(ossJson,title,content,themeId,type);
                         }).subscribe()
@@ -105,17 +103,15 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
      * @param content
      * @param themeId
      */
-    public void createArticle(String files,String title,String content,String themeId,String type) {
-        list.add(
+    private void createArticle(String files, String title, String content, String themeId, String type) {
+        addDisposable(
                 IApplication.api.createArticle(CacheConfigure.getToken(activity.getActivity()),files,title,content,themeId,type)
-                .observeOn(Schedulers.io())
-                .doOnNext(o->{})
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o->ToastUtils.shortToast(activity.getActivity(),o.getMessage()),Throwable::printStackTrace)
         );
     }
 
-    public StsModel getSts() {
+    private StsModel getSts() {
         return sts;
     }
 

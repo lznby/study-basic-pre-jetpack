@@ -12,13 +12,18 @@ public class UserFollowerSizeEntity {
      * 粉丝数
      */
     private int followerSize;
+    /**
+     * 关注主题数
+     */
+    private int followThemeSize;
 
     public UserFollowerSizeEntity() {
     }
 
-    public UserFollowerSizeEntity(int followSize, int followerSize) {
+    public UserFollowerSizeEntity(int followSize, int followerSize, int followThemeSize) {
         this.followSize = followSize;
         this.followerSize = followerSize;
+        this.followThemeSize = followThemeSize;
     }
 
     public int getFollowSize() {
@@ -35,5 +40,13 @@ public class UserFollowerSizeEntity {
 
     public void setFollowerSize(int followerSize) {
         this.followerSize = followerSize;
+    }
+
+    public int getFollowThemeSize() {
+        return followThemeSize;
+    }
+
+    public void setFollowThemeSize(int followThemeSize) {
+        this.followThemeSize = followThemeSize;
     }
 }

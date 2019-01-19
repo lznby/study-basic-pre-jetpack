@@ -14,6 +14,7 @@ import com.lznby.jetpack.content.design.configure.Configure;
 import com.lznby.jetpack.content.design.configure.RouterConfigure;
 import com.lznby.jetpack.content.design.entity.FollowerRouterEntity;
 import com.lznby.jetpack.content.design.entity.LoginEntity;
+import com.lznby.jetpack.content.design.entity.ThemeRouterEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerSizeEntity;
 import com.lznby.jetpack.content.design.vm.MineViewModel;
 import com.lznby.jetpack.utils.LoaderImageUtils;
@@ -69,7 +70,7 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     }
 
     private void initSize(UserFollowerSizeEntity entity) {
-        mTvDynamic.setText(String.valueOf(0));
+        mTvDynamic.setText(entity != null ? String.valueOf(entity.getFollowThemeSize()) : "0");
         mTvFollowing.setText(entity != null ? String.valueOf(entity.getFollowSize()) : "0");
         mTvFollower.setText(entity != null ? String.valueOf(entity.getFollowerSize()) : "0");
     }
@@ -108,21 +109,13 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     }
 
     void mineSettingRouter() {
+        // 跳转到设置
         RouterConfigure.normalRouterUtils(viewModel.activity.getActivity(), SettingActivity.class);
     }
 
     void mineHomeRouter() {
-
+        // 跳转到主页
         RouterConfigure.checkLoginRouterUtils(viewModel.activity.getActivity(), HomePageActivity.class);
-
-//        RouterConfigure.isLoginRouter(viewModel.activity.getActivity(), new SimpleCallback() {
-//            @Override
-//            public void doSomething() {
-//                //跳转到个人主页
-//                toastUtils("个人主页");
-//            }
-//        });
-
     }
 
     void mineDynamicRouter() {
@@ -130,7 +123,10 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
             @Override
             public void doSomething() {
                 //跳转到我的动态
-                toastUtils("我的动态");
+                // 跳转到主题
+                Intent intent = new Intent(getActivity(),ThemeActivity.class);
+                intent.putExtra(ThemeRouterEntity.KEY,new ThemeRouterEntity(CacheConfigure.getUserId(viewModel.getActivityContent())));
+                startActivity(intent);
             }
         });
     }

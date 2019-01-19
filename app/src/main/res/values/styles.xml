@@ -109,10 +109,11 @@
     <!-- image textView left style -->
     <style name="image_text_action">
         <item name="android:clickable">true</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_width">0dp</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/click_layout</item>
+        <item name="android:layout_marginLeft">8dp</item>
         <item name="android:focusable">true</item>
         <item name="android:gravity">center</item>
         <item name="android:drawablePadding">8dp</item>

@@ -5,6 +5,7 @@ import com.lznby.jetpack.content.design.alibaba.oss.model.StsModel;
 import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.LoginEntity;
 import com.lznby.jetpack.content.design.entity.PersonalHomePageEntity;
+import com.lznby.jetpack.content.design.entity.ThemeEntity;
 import com.lznby.jetpack.content.design.entity.UserBaseInfoEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerInfoEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerSizeEntity;
@@ -261,6 +262,58 @@ public interface Api {
     Observable<BaseEntity<List<ArticleAllInfoEntity>>> getArticleByFileAttribution(
             @Header("userCookies") String userCookies,
             @Query("fileAttribution") String fileAttribution
+    );
+
+    /**
+     * 查询某人所有订阅主题的详细信息(返回theme详情信息)
+     *
+     * @param userCookies       发起查询者的Cookies
+     * @param userId            被查询者的userId
+     * @return
+     */
+    @GET("theme/findAllFlowThemeInfo")
+    Observable<BaseEntity<List<ThemeEntity>>> findAllFlowThemeInfo(
+            @Header("userCookies") String userCookies,
+            @Query("userId") String userId
+    );
+
+    /**
+     * 新增主题关注
+     *
+     * @param userCookies       用户Cookies
+     * @param themeId           关注的主题Id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("theme/followTheme")
+    Observable<BaseEntity> followTheme(
+            @Header("userCookies") String userCookies,
+            @Field("themeId") String themeId
+    );
+
+    /**
+     * 取消主题关注
+     *
+     * @param userCookies       用户Cookies
+     * @param themeId           取关的主题Id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("theme/unfollowTheme")
+    Observable<BaseEntity> unfollowTheme(
+            @Header("userCookies") String userCookies,
+            @Field("themeId") String themeId
+    );
+
+    /**
+     * 获取所有主题
+     *
+     * @param userCookies       用户资讯
+     * @return
+     */
+    @GET("theme/findAllTheme")
+    Observable<BaseEntity> findAllTheme(
+            @Header("userCookies") String userCookies
     );
 
 }

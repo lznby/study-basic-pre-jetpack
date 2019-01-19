@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.lznby.jetpack">
 
     <!-- network -->
@@ -35,6 +36,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        tools:replace="android:appComponentFactory"
+        android:appComponentFactory="everyString"
         android:supportsRtl="true"
         android:theme="@style/Base.AppTheme">
         <activity android:name=".content.livedata.MainActivity"/>
@@ -44,7 +47,9 @@
             android:theme="@style/AppTheme.NoStatusBar"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".content.test.SingleFragmentActivity"/>
-        <activity android:name=".content.design.ui.CenterActivity">
+        <!-- 禁止屏幕切换方向 -->
+        <activity android:name=".content.design.ui.CenterActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -77,7 +82,14 @@
         <activity android:name=".content.design.ui.ArticleDetailsActivity">
 
         </activity>
+        <!-- 主题列表 -->
+        <activity android:name=".content.design.ui.ThemeActivity">
 
+        </activity>
+        <!-- 图片浏览 -->
+        <activity android:name=".content.design.ui.ImageWatcherActivity">
+
+        </activity>
         <!-- file provider -->
         <provider
             android:authorities="com.lznby.jetpack.android.provider"

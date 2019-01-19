@@ -97,4 +97,17 @@ public class LoaderImageUtils {
                 .into(view);
     }
 
+    /**
+     * 加载网络图片
+     *
+     * @param context
+     * @param url
+     * @param view
+     */
+    public static void loaderUrlImage(Context context, String url, ImageView view) {
+        Glide.with(context)
+                .load(url)
+                .into(view);
+    }
+
 }

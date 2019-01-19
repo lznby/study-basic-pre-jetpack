@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_layout"
+        android:clickable="true"
+        android:background="@drawable/click_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_header"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@mipmap/icon_default_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/civ_header"
+            app:layout_constraintEnd_toStartOf="@+id/bt_follow"
+            app:layout_constraintStart_toEndOf="@+id/civ_header"
+            app:layout_constraintTop_toTopOf="@+id/civ_header">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="哈哈哈哈"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/civ_header"
+                app:layout_constraintTop_toTopOf="@+id/civ_header"/>
+
+            <TextView
+                android:id="@+id/tv_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="个性签名"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/civ_header"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nickname"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_follow"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/follower_blue"
+            android:text="@string/following"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:background="@drawable/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

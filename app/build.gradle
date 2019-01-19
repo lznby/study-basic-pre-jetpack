@@ -39,6 +39,17 @@ android {
     dataBinding {
         enabled = true
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
 }
 
 dependencies {
@@ -61,6 +72,24 @@ dependencies {
     def smartRefresh = '1.1.0-andx-2'
     implementation "com.scwang.smartrefresh:SmartRefreshLayout:$smartRefresh"
     implementation "com.scwang.smartrefresh:SmartRefreshHeader:$smartRefresh"
+
+//    def gestuerVersion = '2.5.2'
+//    implementation "com.alexvasilkov:gesture-views:$gestuerVersion"
+
+//    def imageWatcherVersion = '1.1.0'
+//    implementation "com.github.iielse:ImageWatcher:$imageWatcherVersion"
+
+    //
+    def likeVersion= '0.2.3'
+    implementation "com.github.jd-alexander:LikeButton:$likeVersion"
+
+    // animation
+//    def lottieVersion = '2.8.0'
+//    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    // https://github.com/DingMouRen/LayoutManagerGroup
+//    def dingMouRenVersion = '1e6f4f96eb'
+//    implementation "com.github.DingMouRen:LayoutManagerGroup:$dingMouRenVersion"
 
     //---------------------------------- Supper UI-------------------------------------
 

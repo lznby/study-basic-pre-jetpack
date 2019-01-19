@@ -11,6 +11,7 @@ import com.lznby.jetpack.content.design.entity.FollowerRouterEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerInfoEntity;
 import com.lznby.jetpack.content.design.ui.FollowerActivity;
 import com.lznby.jetpack.utils.SpUtil;
+import com.lznby.jetpack.utils.ToastUtils;
 
 import java.util.List;
 
@@ -21,11 +22,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  */
 public class FollowerViewModel extends BaseActivityViewModel<FollowerActivity,List<UserFollowerInfoEntity>> {
 
-    public void getData(FollowerRouterEntity entity) {
-        if (entity.getType().equals(FollowerRouterEntity.FOLLOW)) {
-            getFollows(entity.getUserId(),CacheConfigure.getUserId(activity.getActivity()),entity.getWho(), entity.getType());
+    private FollowerRouterEntity params;
+
+    public void getData() {
+        if (params.getType().equals(FollowerRouterEntity.FOLLOW)) {
+            getFollows(params.getUserId(),CacheConfigure.getUserId(activity.getActivity()),params.getWho(), params.getType());
         } else {
-            getFollowers(entity.getUserId(),entity.getWho(), entity.getType());
+            getFollowers(params.getUserId(),params.getWho(), params.getType());
         }
     }
 
@@ -94,4 +97,57 @@ public class FollowerViewModel extends BaseActivityViewModel<FollowerActivity,Li
         }
     }
 
+    /**
+     * 点击关注|取消关注后的响应事件
+     *
+     * @param entity
+     * @param isFollow
+     */
+    public void updateUi(BaseEntity entity, boolean isFollow) {
+        if (isFollow) {
+            if (entity.getCode() == Configure.ResponseCode.SUCCESS) {
+                ToastUtils.shortToast(activity.getActivity(),"关注成功");
+                getData();
+            } else {
+                ToastUtils.shortToast(activity.getActivity(),entity.getMessage());
+            }
+        } else {
+            if (entity.getCode() == Configure.ResponseCode.SUCCESS) {
+                ToastUtils.shortToast(activity.getActivity(),"取消成功");
+                getData();
+            } else {
+                ToastUtils.shortToast(activity.getActivity(),entity.getMessage());
+            }
+        }
+    }
+
+    /**
+     * 关注
+     *
+     * @param item
+     */
+    public void follow(UserFollowerInfoEntity item) {
+        addDisposable(
+                IApplication.api.follow(CacheConfigure.getToken(activity.getActivity()), FollowerRouterEntity.FOLLOWER.equals(params.getType())?item.getUserId():item.getFollowId())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o->updateUi(o,true),Throwable::printStackTrace)
+        );
+    }
+
+    /**
+     * 取消关注
+     *
+     * @param item
+     */
+    public void unFollower(UserFollowerInfoEntity item) {
+        addDisposable(
+                IApplication.api.unFollower(CacheConfigure.getToken(activity.getActivity()),CacheConfigure.getUserId(activity.getActivity()),FollowerRouterEntity.FOLLOWER.equals(params.getType())?item.getUserId():item.getFollowId())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o->updateUi(o, false),Throwable::printStackTrace)
+        );
+    }
+
+    public void setParams(FollowerRouterEntity params) {
+        this.params = params;
+    }
 }

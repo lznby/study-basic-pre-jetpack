@@ -80,43 +80,37 @@
 
                         <LinearLayout
                             android:id="@+id/ll_action"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:layout_marginEnd="8dp"
-                            android:gravity="center"
                             android:orientation="horizontal"
+                            android:layout_gravity="right"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/rv_image">
 
                             <com.lznby.jetpack.content.design.view.ImageTextView
                                 style="@style/image_text_action"
-                                android:drawableLeft="@mipmap/icon_mine_theme"
-                                android:text="阅读"
+                                android:drawableLeft="@mipmap/icon_read_count"
+                                android:text="100"
                                 app:drawableLeftHeight="24dp"
                                 app:drawableLeftWidth="24dp"/>
 
                             <com.lznby.jetpack.content.design.view.ImageTextView
                                 style="@style/image_text_action"
-                                android:drawableLeft="@mipmap/icon_mine_theme"
-                                android:text="留言"
+                                android:drawableLeft="@mipmap/icon_commit"
+                                android:text="100"
                                 app:drawableLeftHeight="24dp"
                                 app:drawableLeftWidth="24dp"/>
 
                             <com.lznby.jetpack.content.design.view.ImageTextView
                                 style="@style/image_text_action"
-                                android:drawableLeft="@mipmap/icon_mine_theme"
-                                android:text="喜欢"
+                                android:drawableLeft="@mipmap/icon_love_gray"
+                                android:text="999"
                                 app:drawableLeftHeight="24dp"
                                 app:drawableLeftWidth="24dp"/>
 
-                            <com.lznby.jetpack.content.design.view.ImageTextView
-                                style="@style/image_text_action"
-                                android:drawableLeft="@mipmap/icon_mine_theme"
-                                android:text="不喜欢"
-                                app:drawableLeftHeight="24dp"
-                                app:drawableLeftWidth="24dp"/>
 
                         </LinearLayout>
 
@@ -154,7 +148,7 @@
 
         <ImageView
             android:id="@+id/iv_music"
-            android:src="@mipmap/icon_music"
+            android:src="@mipmap/icon_send_gray"
             android:layout_margin="8dp"
             android:layout_width="32dp"
             android:layout_height="32dp"/>

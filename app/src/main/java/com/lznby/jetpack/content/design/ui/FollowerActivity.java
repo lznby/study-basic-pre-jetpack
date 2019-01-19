@@ -5,8 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.base.BaseActivity;
 import com.lznby.jetpack.content.design.adapter.FollowerAdapter;
@@ -50,17 +52,35 @@ public class FollowerActivity extends BaseActivity<FollowerViewModel, List<UserF
     @Override
     protected void doOnCreate() {
         params = getIntent().getParcelableExtra(FollowerRouterEntity.KEY);
+        viewModel.setParams(params);
         mTvTitle.setText(params.getWho()+params.getType());
         setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
         mToolbar.setNavigationIcon(R.mipmap.icon_left_arrows);
         // get page data.
-        viewModel.getData(params);
+        viewModel.getData();
         // set RecyclerView adapter.
-        followerAdapter = new FollowerAdapter(R.layout.item_adapter_follower,viewModel, params);
+        followerAdapter = new FollowerAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRvFollow.setLayoutManager(layoutManager);
         mRvFollow.setAdapter(followerAdapter);
+
+        followerAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.bt_follow:
+                        if (((UserFollowerInfoEntity)adapter.getData().get(position)).getIsFollow() == 1) {
+                            viewModel.unFollower((UserFollowerInfoEntity)adapter.getData().get(position));
+                        } else {
+                            viewModel.follow((UserFollowerInfoEntity)adapter.getData().get(position));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         // set empty view.
         followerAdapter.setEmptyView(EmptyRvPage.getEmptyView(mRvFollow));

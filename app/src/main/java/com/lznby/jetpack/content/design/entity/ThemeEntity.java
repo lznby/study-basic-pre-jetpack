@@ -4,6 +4,8 @@ package com.lznby.jetpack.content.design.entity;
  * 主题信息表
  *
  * app_theme
+ *
+ * @author Lznby
  */
 public class ThemeEntity {
     /**
@@ -29,23 +31,31 @@ public class ThemeEntity {
     /**
      * 主题背景所在 app_theme_path 中编号
      */
-    String fileAttribution;
+    String themeHeaderImage;
     /**
      * 关注该主题的人数
      */
     int subCount;
 
+    /**
+     * 判断发起查询者是否关注了该主题
+     *
+     * 非数据库字段
+     */
+    boolean isFollow;
+
     public ThemeEntity() {
     }
 
-    public ThemeEntity(String themeId, String time, String themeName, String themeNote, String themeImage, String fileAttribution, int subCount) {
+    public ThemeEntity(String themeId, String time, String themeName, String themeNote, String themeImage, String themeHeaderImage, int subCount, boolean isFollow) {
         this.themeId = themeId;
         this.time = time;
         this.themeName = themeName;
         this.themeNote = themeNote;
         this.themeImage = themeImage;
-        this.fileAttribution = fileAttribution;
+        this.themeHeaderImage = themeHeaderImage;
         this.subCount = subCount;
+        this.isFollow = isFollow;
     }
 
     public String getThemeId() {
@@ -88,12 +98,12 @@ public class ThemeEntity {
         this.themeImage = themeImage;
     }
 
-    public String getFileAttribution() {
-        return fileAttribution;
+    public String getThemeHeaderImage() {
+        return themeHeaderImage;
     }
 
-    public void setFileAttribution(String fileAttribution) {
-        this.fileAttribution = fileAttribution;
+    public void setThemeHeaderImage(String themeHeaderImage) {
+        this.themeHeaderImage = themeHeaderImage;
     }
 
     public int getSubCount() {
@@ -102,5 +112,13 @@ public class ThemeEntity {
 
     public void setSubCount(int subCount) {
         this.subCount = subCount;
+    }
+
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
     }
 }
