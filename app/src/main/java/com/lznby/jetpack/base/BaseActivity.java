@@ -55,7 +55,7 @@ public abstract class BaseActivity<T extends BaseActivityViewModel,K> extends Ap
         viewModel.getLiveData().observe(this,observable);
 
         // Do something when activity lifecycle was 'OnCreate'.
-        doOnCreate();
+        doOnCreate(savedInstanceState);
     }
 
     @Override
@@ -86,7 +86,7 @@ public abstract class BaseActivity<T extends BaseActivityViewModel,K> extends Ap
     /**
      * This method be used to do something when activity lifecycle was 'OnCreate'.
      */
-    protected abstract void doOnCreate();
+    protected abstract void doOnCreate(@Nullable Bundle savedInstanceState);
 
     /**
      * 获取 T.class

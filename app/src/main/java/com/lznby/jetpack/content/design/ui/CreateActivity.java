@@ -3,6 +3,7 @@ package com.lznby.jetpack.content.design.ui;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatSpinner;
@@ -86,7 +87,7 @@ public class CreateActivity extends BaseActivity<CreateViewModel, List<FileEntit
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.icon_left_arrows);
         toolbar.setOnMenuItemClickListener(this);

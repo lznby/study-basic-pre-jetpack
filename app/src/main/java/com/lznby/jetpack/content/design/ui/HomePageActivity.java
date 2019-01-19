@@ -2,6 +2,8 @@ package com.lznby.jetpack.content.design.ui;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -69,7 +71,7 @@ public class HomePageActivity extends BaseActivity<HomePageViewModel,PersonalHom
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
         setSupportActionBar(toolbar);
         // 设置状态栏透明
         BarUtils.setStatusBarAlpha(this,0);

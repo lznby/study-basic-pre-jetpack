@@ -1,6 +1,7 @@
 package com.lznby.jetpack.content.test;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.base.BaseActivityViewModel;
@@ -29,9 +30,10 @@ public class SingleFragmentActivity extends BaseSingleFragmentActivity<BaseActiv
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
 
     }
+
 
     @Override
     protected void bindView(BaseEntity<String> entity) {

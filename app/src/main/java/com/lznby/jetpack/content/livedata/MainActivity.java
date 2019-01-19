@@ -1,5 +1,7 @@
 package com.lznby.jetpack.content.livedata;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,8 +33,10 @@ public class MainActivity extends BaseActivity<StringViewModel,String> {
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
+
     }
+
 
     @Override
     protected void bindView(String entity) {

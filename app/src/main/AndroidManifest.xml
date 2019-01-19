@@ -47,9 +47,9 @@
             android:theme="@style/AppTheme.NoStatusBar"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".content.test.SingleFragmentActivity"/>
-        <!-- 禁止屏幕切换方向 -->
+        <!-- 屏幕旋转不走生命周期 -->
         <activity android:name=".content.design.ui.CenterActivity"
-                  android:screenOrientation="portrait">
+                  android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

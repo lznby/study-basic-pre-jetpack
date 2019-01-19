@@ -16,20 +16,28 @@ public interface Configure {
          */
         int HOME = 1;
 
+        String HOME_TAG = "HOME";
+
         /**
          * MainSubscribeFragment Type
          */
         int SUBSCRIBE = 2;
+
+        String SUBSCRIBE_TAG = "SUBSCRIBE";
 
         /**
          * MainDiscoveryFragment Type
          */
         int DISCOVERY = 3;
 
+        String DISCOVERY_TAG = "DISCOVERY";
+
         /**
          * MainMineFragment Type
          */
         int MINE = 4;
+
+        String MINE_TAG = "MINE";
     }
 
     /**

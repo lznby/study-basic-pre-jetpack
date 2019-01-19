@@ -1,6 +1,8 @@
 package com.lznby.jetpack.content.design.ui;
 
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -50,7 +52,7 @@ public class FollowerActivity extends BaseActivity<FollowerViewModel, List<UserF
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
         params = getIntent().getParcelableExtra(FollowerRouterEntity.KEY);
         viewModel.setParams(params);
         mTvTitle.setText(params.getWho()+params.getType());

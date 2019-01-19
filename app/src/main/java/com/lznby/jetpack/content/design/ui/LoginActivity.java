@@ -1,5 +1,7 @@
 package com.lznby.jetpack.content.design.ui;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
@@ -41,7 +43,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, BaseEntity<Login
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
         // 设置状态栏透明
         BarUtils.setStatusBarAlpha(this,0);
         // 为view增加MarginTop为状态栏高度

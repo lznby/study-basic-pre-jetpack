@@ -1,6 +1,8 @@
 package com.lznby.jetpack.content.design.ui;
 
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -39,7 +41,7 @@ public class ImageWatcherActivity extends BaseActivity<BaseActivityViewModel,Obj
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
         BarUtils.setStatusBarColor(this, Color.BLACK);
 
         params = getIntent().getParcelableExtra(ImageWatcherRouterEntity.KEY);

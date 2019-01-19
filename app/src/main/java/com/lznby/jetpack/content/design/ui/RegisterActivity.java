@@ -2,6 +2,8 @@ package com.lznby.jetpack.content.design.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,7 +34,7 @@ public class RegisterActivity extends BaseActivity<RegisterViewModel,BaseEntity<
     }
 
     @Override
-    protected void doOnCreate() {
+    protected void doOnCreate(@Nullable Bundle savedInstanceState) {
 
     }
 
