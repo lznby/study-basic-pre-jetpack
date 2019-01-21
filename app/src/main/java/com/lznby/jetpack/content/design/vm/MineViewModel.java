@@ -23,19 +23,18 @@ public class MineViewModel extends BaseFragmentViewModel<MainMineFragment, Cente
 
     private MutableLiveData<UserFollowerSizeEntity> followerSizeLiveData;
 
-    public void getMineUserInfo(String userCookies,String userId) {
+    public void getMineUserInfo(String userCookies, String userId) {
         //用户头像及昵称签名——本地
         getLiveData().postValue(CacheConfigure.getUserEntity(getActivityContent()));
         //关注、粉丝数——本地
-        getFollowerSizeLiveData().postValue((UserFollowerSizeEntity) CacheConfigure.getSpEntity(getActivityContent(),Configure.SpCache.SP_FOLLOWER_SIZE,UserFollowerSizeEntity.class));
+        getFollowerSizeLiveData().postValue((UserFollowerSizeEntity) CacheConfigure.getSpEntity(getActivityContent(), Configure.SpCache.SP_FOLLOWER_SIZE, UserFollowerSizeEntity.class));
         //获取动态、关注及粉丝——先本地在网络更新
-        activity.getActivity()
-                .addDisposable(
-                        IApplication.api.getUserFollowerSize(userCookies,userId)
+        addDisposable(
+                IApplication.api.getUserFollowerSize(userCookies, userId)
                         .doOnNext(this::doCache)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::doOnNext,Throwable::printStackTrace)
-                );
+                        .subscribe(this::doOnNext, Throwable::printStackTrace)
+        );
     }
 
     private void doOnNext(BaseEntity<UserFollowerSizeEntity> entity) {
@@ -43,9 +42,9 @@ public class MineViewModel extends BaseFragmentViewModel<MainMineFragment, Cente
     }
 
     private void doCache(BaseEntity<UserFollowerSizeEntity> entity) {
-        if (entity.getData()!=null) {
+        if (entity.getData() != null) {
             Gson gson = new Gson();
-            SpUtil.putValue(activity.getActivity(),Configure.SpCache.SP_FOLLOWER_SIZE, gson.toJson(entity.getData()));
+            SpUtil.putValue(activity.getActivity(), Configure.SpCache.SP_FOLLOWER_SIZE, gson.toJson(entity.getData()));
         }
     }
 

@@ -19,14 +19,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class LoginViewModel extends BaseActivityViewModel<LoginActivity, BaseEntity<LoginEntity>> {
 
     public void login(LoginParams params) {
-        activity.getActivity()
-                .addDisposable(
-                        IApplication.api.login(params.getUserNickName(), params.getUserPassword())
-                                .doOnNext(this::doCache)
-                                //.compose(new RestfulTransformer<>())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(this::doOnNext, Throwable::printStackTrace)
-                );
+        addDisposable(
+                IApplication.api.login(params.getUserNickName(), params.getUserPassword())
+                        .doOnNext(this::doCache)
+                        //.compose(new RestfulTransformer<>())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::doOnNext, Throwable::printStackTrace)
+        );
     }
 
     private void doOnNext(BaseEntity<LoginEntity> entity) {

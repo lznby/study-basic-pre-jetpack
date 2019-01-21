@@ -31,6 +31,7 @@ public class UserInfoViewModel extends BaseActivityViewModel<UserInfoActivity, U
 
     /**
      * get user base information.
+     *
      * @param userCookies
      */
     public void getUserBaseInfo(String userCookies) {
@@ -39,38 +40,37 @@ public class UserInfoViewModel extends BaseActivityViewModel<UserInfoActivity, U
         String cache = SpUtil.getValue(activity.getActivity(), Configure.SpCache.SP_BASE_USER_INFO, "");
         if (!StringUtils.isEmpty(cache)) {
             Gson gson = new Gson();
-            getLiveData().postValue(gson.fromJson(cache,UserBaseInfoEntity.class));
+            getLiveData().postValue(gson.fromJson(cache, UserBaseInfoEntity.class));
         }
 
         // default edit state was false.
         getIsEditLiveData().postValue(false);
 
         //get data on network.
-        activity.getActivity()
-                .addDisposable(
-                        IApplication.api.getUserBaseInfo(userCookies)
-                                .doOnNext(this::doCache)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(this::doOnNext, Throwable::printStackTrace)
-                );
+        addDisposable(
+                IApplication.api.getUserBaseInfo(userCookies)
+                        .doOnNext(this::doCache)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(this::doOnNext, Throwable::printStackTrace)
+        );
     }
 
     /**
      * update user base information.
+     *
      * @param map
      */
-    public void saveUserBaseInfo(Map<String,String> map) {
+    public void saveUserBaseInfo(Map<String, String> map) {
 
-        if (getIsEditLiveData().getValue()!=null) {
+        if (getIsEditLiveData().getValue() != null) {
             getIsEditLiveData().postValue(!getIsEditLiveData().getValue());
             if (getIsEditLiveData().getValue()) {
-                activity.getActivity()
-                        .addDisposable(
-                                IApplication.api.updateUserBaseInfo(CacheConfigure.getToken(activity.getActivity()),map)
-                                        .doOnNext(this::doCache)
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(this::doOnNext,Throwable::printStackTrace)
-                        );
+                addDisposable(
+                        IApplication.api.updateUserBaseInfo(CacheConfigure.getToken(activity.getActivity()), map)
+                                .doOnNext(this::doCache)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(this::doOnNext, Throwable::printStackTrace)
+                );
             }
         } else {
             getIsEditLiveData().postValue(false);
@@ -79,6 +79,7 @@ public class UserInfoViewModel extends BaseActivityViewModel<UserInfoActivity, U
 
     /**
      * network ui response.
+     *
      * @param entity
      */
     private void doOnNext(BaseEntity<UserBaseInfoEntity> entity) {
@@ -88,6 +89,7 @@ public class UserInfoViewModel extends BaseActivityViewModel<UserInfoActivity, U
 
     /**
      * save data by sp.
+     *
      * @param entity
      */
     private void doCache(BaseEntity<UserBaseInfoEntity> entity) {
@@ -102,7 +104,7 @@ public class UserInfoViewModel extends BaseActivityViewModel<UserInfoActivity, U
      * get isEditLiveData.
      */
     public MutableLiveData<Boolean> getIsEditLiveData() {
-        if (isEditLiveData==null) {
+        if (isEditLiveData == null) {
             isEditLiveData = new MutableLiveData<>();
         }
         return isEditLiveData;

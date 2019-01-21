@@ -16,7 +16,6 @@ import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.ThemeEntity;
 import com.lznby.jetpack.content.design.entity.ThemeRouterEntity;
 import com.lznby.jetpack.content.design.vm.ThemeViewModel;
-import com.lznby.jetpack.utils.ToastUtils;
 
 import java.util.List;
 
@@ -73,8 +72,11 @@ public class ThemeActivity extends BaseActivity<ThemeViewModel,List<ThemeEntity>
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.bt_follow:
-                        // 点击事件
-                        ToastUtils.shortToast(ThemeActivity.this,"订阅事件");
+                        if (viewModel.getLiveData().getValue().get(position).isFollowed()) {
+                            viewModel.unFollowTheme(viewModel.getLiveData().getValue().get(position).getThemeId(),position);
+                        } else {
+                            viewModel.followTheme(viewModel.getLiveData().getValue().get(position).getThemeId(),position);
+                        }
                         break;
                     default:
                         break;

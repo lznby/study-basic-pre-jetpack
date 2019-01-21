@@ -122,7 +122,6 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
         RouterConfigure.isLoginRouter(viewModel.activity.getActivity(), new SimpleCallback() {
             @Override
             public void doSomething() {
-                //跳转到我的动态
                 // 跳转到主题
                 Intent intent = new Intent(getActivity(),ThemeActivity.class);
                 intent.putExtra(ThemeRouterEntity.KEY,new ThemeRouterEntity(CacheConfigure.getUserId(viewModel.getActivityContent())));

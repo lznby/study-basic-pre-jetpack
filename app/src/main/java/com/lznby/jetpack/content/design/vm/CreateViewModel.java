@@ -27,24 +27,25 @@ import okhttp3.MultipartBody;
  *
  * @author Lznby
  */
-public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<FileEntity>> {
+public class CreateViewModel extends BaseActivityViewModel<CreateActivity, List<FileEntity>> {
 
     private StsModel sts = new StsModel();
 
     /**
      * 上传资讯老的接口
+     *
      * @param parts
      */
     public void uploadImages(MultipartBody.Part[] parts) {
-        list.add(
+        addDisposable(
                 IApplication.api.uploadImage(parts)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::doOnNext,Throwable::printStackTrace)
+                        .subscribe(this::doOnNext, Throwable::printStackTrace)
         );
     }
 
     private void doOnNext(BaseEntity entity) {
-        ToastUtils.shortToast(activity.getActivity(),entity.getMessage());
+        ToastUtils.shortToast(activity.getActivity(), entity.getMessage());
     }
 
     /**
@@ -53,8 +54,8 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
     private void getStsFromService() {
         addDisposable(
                 IApplication.api.getOssSts()
-                .observeOn(Schedulers.io())
-                .subscribe(o->sts = o.getData(),Throwable::printStackTrace)
+                        .observeOn(Schedulers.io())
+                        .subscribe(o -> sts = o.getData(), Throwable::printStackTrace)
         );
     }
 
@@ -63,7 +64,7 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
      *
      * @param urls
      */
-    public void uploadImage(List<String> urls,String title,String content,String themeId) {
+    public void uploadImage(List<String> urls, String title, String content, String themeId) {
         List<String> ossUrls = new ArrayList<>();
         addDisposable(
                 Flowable.fromIterable(urls)
@@ -83,14 +84,14 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
                         })
                         .doOnNext(
                                 // 上传压缩后的图片到到Oss服务器
-                                o-> ossUrls.add(OssUtils.uploadImage(activity.getActivity(),getSts(),o.getPath()))
+                                o -> ossUrls.add(OssUtils.uploadImage(activity.getActivity(), getSts(), o.getPath()))
                         )
                         .doOnComplete(() -> {
                             Gson gson = new Gson();
                             String ossJson = gson.toJson(ossUrls);
-                            String type = ossUrls.size()>0?FileUtils.getType(ossUrls.get(0)):FileUtils.IMAGE;
+                            String type = ossUrls.size() > 0 ? FileUtils.getType(ossUrls.get(0)) : FileUtils.IMAGE;
                             // 执行资讯创建步骤
-                            createArticle(ossJson,title,content,themeId,type);
+                            createArticle(ossJson, title, content, themeId, type);
                         }).subscribe()
         );
     }
@@ -105,9 +106,9 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity,List<F
      */
     private void createArticle(String files, String title, String content, String themeId, String type) {
         addDisposable(
-                IApplication.api.createArticle(CacheConfigure.getToken(activity.getActivity()),files,title,content,themeId,type)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(o->ToastUtils.shortToast(activity.getActivity(),o.getMessage()),Throwable::printStackTrace)
+                IApplication.api.createArticle(CacheConfigure.getToken(activity.getActivity()), files, title, content, themeId, type)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(o -> ToastUtils.shortToast(activity.getActivity(), o.getMessage()), Throwable::printStackTrace)
         );
     }
 

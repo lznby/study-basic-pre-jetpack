@@ -16,12 +16,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class HomePageViewModel extends BaseActivityViewModel<HomePageActivity, PersonalHomePageEntity> {
 
     public void getHomePageViewModel(String userCookies, String userId) {
-        activity.getActivity()
-                .addDisposable(
-                        IApplication.api.getPersonalHomePage(userCookies,userId)
+        addDisposable(
+                IApplication.api.getPersonalHomePage(userCookies, userId)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::doOnNext,Throwable::printStackTrace)
-                );
+                        .subscribe(this::doOnNext, Throwable::printStackTrace)
+        );
     }
 
     private void doOnNext(BaseEntity<PersonalHomePageEntity> entity) {

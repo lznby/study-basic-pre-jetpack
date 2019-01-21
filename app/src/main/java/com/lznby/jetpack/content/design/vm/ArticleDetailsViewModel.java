@@ -17,7 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  *
  * @author Lznby
  */
-public class ArticleDetailsViewModel extends BaseActivityViewModel<ArticleDetailsActivity,ArticleAllInfoEntity> {
+public class ArticleDetailsViewModel extends BaseActivityViewModel<ArticleDetailsActivity, ArticleAllInfoEntity> {
     /**
      * 资讯Intent传参
      */
@@ -37,11 +37,11 @@ public class ArticleDetailsViewModel extends BaseActivityViewModel<ArticleDetail
     /**
      * 获取资讯详情
      */
-    public void getArticleByFileAttribution() {
-        list.add(
-                IApplication.api.getArticleByFileAttribution(CacheConfigure.getToken(activity.getActivity()),params.getFileAttribution())
+    private void getArticleByFileAttribution() {
+        addDisposable(
+                IApplication.api.getArticleByFileAttribution(CacheConfigure.getToken(activity.getActivity()), params.getFileAttribution())
                         .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::doOnNext,Throwable::printStackTrace)
+                        .subscribe(this::doOnNext, Throwable::printStackTrace)
         );
     }
 

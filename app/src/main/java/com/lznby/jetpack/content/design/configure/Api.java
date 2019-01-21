@@ -37,12 +37,12 @@ public interface Api {
     /**
      * 公司局域网IP
      */
-//    String HOST = "http://172.16.66.141:8080";
+    String HOST = "http://172.16.66.145:8080";
 
     /**
      * 阿里云公网IP
      */
-    String HOST = "http://39.108.138.218/android/";
+//    String HOST = "http://39.108.138.218/android/";
 
     /**
      * register interface
@@ -312,7 +312,7 @@ public interface Api {
      * @return
      */
     @GET("theme/findAllTheme")
-    Observable<BaseEntity> findAllTheme(
+    Observable<BaseEntity<List<ThemeEntity>>> findAllTheme(
             @Header("userCookies") String userCookies
     );
 

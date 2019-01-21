@@ -21,28 +21,27 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class AccountManagerViewModel extends BaseActivityViewModel<AccountManagerActivity, Object> {
 
     public void updatePassword(UpdatePasswordParams params) {
-        activity.getActivity()
-                .addDisposable(
-                        IApplication.api.updatePassword(CacheConfigure.getToken(activity.getActivity()), params.getUserPassword(), params.getNewUserPassword(), params.getrUserPassword())
+        addDisposable(
+                IApplication.api.updatePassword(CacheConfigure.getToken(activity.getActivity()), params.getUserPassword(), params.getNewUserPassword(), params.getrUserPassword())
                         .doOnNext(this::doClear)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::doOnNext,Throwable::printStackTrace)
-                );
+                        .subscribe(this::doOnNext, Throwable::printStackTrace)
+        );
     }
 
     private void doOnNext(BaseEntity<Object> entity) {
 
-        if (entity.getCode()==Configure.ResponseCode.UN_LOGIN) {
-            ToastUtils.shortToast(activity.getActivity(),"密码修改成功,请重新登录！");
-            RouterConfigure.normalRouterUtils(activity.getActivity(),LoginActivity.class);
+        if (entity.getCode() == Configure.ResponseCode.UN_LOGIN) {
+            ToastUtils.shortToast(activity.getActivity(), "密码修改成功,请重新登录！");
+            RouterConfigure.normalRouterUtils(activity.getActivity(), LoginActivity.class);
             activity.getActivity().finish();
         } else {
-            ToastUtils.shortToast(activity.getActivity(),entity.getMessage());
+            ToastUtils.shortToast(activity.getActivity(), entity.getMessage());
         }
     }
 
     private void doClear(BaseEntity<Object> entity) {
-        if (entity.getCode()==Configure.ResponseCode.UN_LOGIN) {
+        if (entity.getCode() == Configure.ResponseCode.UN_LOGIN) {
             CacheConfigure.clearAll(activity.getActivity());
         }
     }

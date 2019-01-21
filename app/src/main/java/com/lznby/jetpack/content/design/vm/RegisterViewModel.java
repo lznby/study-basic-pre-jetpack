@@ -21,7 +21,7 @@ public class RegisterViewModel extends BaseActivityViewModel<RegisterActivity, B
      * @param params
      */
     public void register(RegisterParams params) {
-        activity.getActivity().addDisposable(
+        addDisposable(
                 IApplication.api.register(params.getUserNickName(), params.getUserPassword())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(this::doOnNext, Throwable::printStackTrace)
@@ -36,9 +36,8 @@ public class RegisterViewModel extends BaseActivityViewModel<RegisterActivity, B
      */
     private void doOnNext(BaseEntity<Object> entity) {
         getLiveData().postValue(entity);
-        ResponseUiConfigure.responseUtils(entity,activity.getActivity());
+        ResponseUiConfigure.responseUtils(entity, activity.getActivity());
     }
-
 
 
 }

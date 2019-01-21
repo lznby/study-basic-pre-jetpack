@@ -110,4 +110,17 @@ public class LoaderImageUtils {
                 .into(view);
     }
 
+    /**
+     *
+     * @param context
+     * @param url
+     * @param view
+     */
+    public static void loaderUrlCenterImage(Context context, String url, ImageView view) {
+        GlideApp.with(context)
+                .load(url)
+                .centerCrop()
+                .into(view);
+    }
+
 }

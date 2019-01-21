@@ -35,19 +35,13 @@ public class CenterActivity extends BaseActivity<CenterViewModel,Object> impleme
 
     @Override
     protected void doOnCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            mainHomeFragment = (MainHomeFragment) getSupportFragmentManager().findFragmentByTag(Configure.FragmentType.HOME_TAG);
-            mainSubscribeFragment = (MainSubscribeFragment) getSupportFragmentManager().findFragmentByTag(Configure.FragmentType.SUBSCRIBE_TAG);
-            mainDiscoveryFragment = (MainDiscoveryFragment) getSupportFragmentManager().findFragmentByTag(Configure.FragmentType.DISCOVERY_TAG);
-            mainMineFragment = (MainMineFragment) getSupportFragmentManager().findFragmentByTag(Configure.FragmentType.MINE_TAG);
-        }
         initFragment(mainHomeFragment, Configure.FragmentType.HOME);
         bnvMain.setOnNavigationItemSelectedListener(this);
     }
 
     @Override
     protected void bindView(Object entity) {
-
+        
     }
 
 

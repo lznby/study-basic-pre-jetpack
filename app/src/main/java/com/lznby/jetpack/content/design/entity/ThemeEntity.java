@@ -4,8 +4,6 @@ package com.lznby.jetpack.content.design.entity;
  * 主题信息表
  *
  * app_theme
- *
- * @author Lznby
  */
 public class ThemeEntity {
     /**
@@ -42,12 +40,12 @@ public class ThemeEntity {
      *
      * 非数据库字段
      */
-    boolean isFollow;
+    boolean followed;
 
     public ThemeEntity() {
     }
 
-    public ThemeEntity(String themeId, String time, String themeName, String themeNote, String themeImage, String themeHeaderImage, int subCount, boolean isFollow) {
+    public ThemeEntity(String themeId, String time, String themeName, String themeNote, String themeImage, String themeHeaderImage, int subCount, boolean followed) {
         this.themeId = themeId;
         this.time = time;
         this.themeName = themeName;
@@ -55,7 +53,7 @@ public class ThemeEntity {
         this.themeImage = themeImage;
         this.themeHeaderImage = themeHeaderImage;
         this.subCount = subCount;
-        this.isFollow = isFollow;
+        this.followed = followed;
     }
 
     public String getThemeId() {
@@ -114,11 +112,11 @@ public class ThemeEntity {
         this.subCount = subCount;
     }
 
-    public boolean isFollow() {
-        return isFollow;
+    public boolean isFollowed() {
+        return followed;
     }
 
-    public void setFollow(boolean follow) {
-        isFollow = follow;
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
     }
 }

@@ -1,13 +1,13 @@
 package com.lznby.jetpack.content.design.vm;
 
-import com.lznby.jetpack.base.BaseActivityViewModel;
 import com.lznby.jetpack.base.BaseEntity;
+import com.lznby.jetpack.base.BaseFragmentViewModel;
 import com.lznby.jetpack.configure.IApplication;
 import com.lznby.jetpack.content.design.configure.CacheConfigure;
 import com.lznby.jetpack.content.design.configure.Configure;
 import com.lznby.jetpack.content.design.entity.ThemeEntity;
-import com.lznby.jetpack.content.design.entity.ThemeRouterEntity;
-import com.lznby.jetpack.content.design.ui.ThemeActivity;
+import com.lznby.jetpack.content.design.ui.CenterActivity;
+import com.lznby.jetpack.content.design.ui.DiscoveryThemeFragment;
 import com.lznby.jetpack.net.transform.RestfulTransformer;
 import com.lznby.jetpack.utils.ToastUtils;
 
@@ -18,35 +18,32 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 主题列表页面
+ * 发现-主题-Fragment-ViewModel
  *
  * @author Lznby
  */
-public class ThemeViewModel extends BaseActivityViewModel<ThemeActivity, List<ThemeEntity>> {
-
-    private ThemeRouterEntity params;
-
-    public void setParams(ThemeRouterEntity params) {
-        this.params = params;
-    }
-
-    private void getThemeInfo() {
-        addDisposable(
-                IApplication.api.findAllFlowThemeInfo(CacheConfigure.getToken(activity.getActivity()), params.getUserId())
-                        .compose(new RestfulTransformer<>())
-                        .observeOn(Schedulers.io())
-                        .subscribe(this::doOnNext, Throwable::printStackTrace)
-        );
-    }
-
-    private void doOnNext(List<ThemeEntity> themeEntities) {
-        getLiveData().postValue(themeEntities);
-    }
+public class DiscoveryThemeViewModel extends BaseFragmentViewModel<DiscoveryThemeFragment,CenterActivity,List<ThemeEntity>> {
 
     @Override
     public void onCreate() {
         super.onCreate();
         getThemeInfo();
+    }
+
+    /**
+     * 获取所有主题
+     */
+    private void getThemeInfo() {
+        addDisposable(
+                IApplication.api.findAllTheme(CacheConfigure.getToken(getActivityContent()))
+                .compose(new RestfulTransformer<>())
+                .observeOn(Schedulers.io())
+                .subscribe(this::onOnNext,Throwable::printStackTrace)
+        );
+    }
+
+    private void onOnNext(List<ThemeEntity> themeEntities) {
+        getLiveData().postValue(themeEntities);
     }
 
     /**
@@ -57,9 +54,9 @@ public class ThemeViewModel extends BaseActivityViewModel<ThemeActivity, List<Th
      */
     public void followTheme(String themeId, int position) {
         addDisposable(
-                IApplication.api.followTheme(CacheConfigure.getToken(activity.getActivity()),themeId)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(o->updateUI(o,true,position),Throwable::printStackTrace)
+                IApplication.api.followTheme(CacheConfigure.getToken(getActivityContent()),themeId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o->updateUI(o,true,position),Throwable::printStackTrace)
         );
     }
 
@@ -72,7 +69,7 @@ public class ThemeViewModel extends BaseActivityViewModel<ThemeActivity, List<Th
      */
     public void unFollowTheme(String themeId, int position) {
         addDisposable(
-                IApplication.api.unfollowTheme(CacheConfigure.getToken(activity.getActivity()),themeId)
+                IApplication.api.unfollowTheme(CacheConfigure.getToken(getActivityContent()),themeId)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(o->updateUI(o,false,position),Throwable::printStackTrace)
         );
@@ -85,7 +82,7 @@ public class ThemeViewModel extends BaseActivityViewModel<ThemeActivity, List<Th
      * @param isFollow          true:订阅请求结果|false:取消订阅请求结果
      * @param position          请求对象在原队列中位置
      */
-    private void updateUI(BaseEntity entity, boolean isFollow, int position) {
+    private void updateUI(BaseEntity entity,boolean isFollow,int position) {
         if (Objects.requireNonNull(getLiveData().getValue()).size()>position  && entity.getCode()==Configure.ResponseCode.SUCCESS) {
             if (isFollow) {
                 getLiveData().getValue().get(position).setFollowed(true);
@@ -96,7 +93,9 @@ public class ThemeViewModel extends BaseActivityViewModel<ThemeActivity, List<Th
             }
             getLiveData().postValue(getLiveData().getValue());
         } else {
-            ToastUtils.shortToast(activity.getActivity(),entity.getMessage());
+            ToastUtils.shortToast(getActivityContent(),entity.getMessage());
         }
     }
+
+
 }

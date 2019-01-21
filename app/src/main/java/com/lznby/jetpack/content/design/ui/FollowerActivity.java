@@ -73,9 +73,9 @@ public class FollowerActivity extends BaseActivity<FollowerViewModel, List<UserF
                 switch (view.getId()) {
                     case R.id.bt_follow:
                         if (((UserFollowerInfoEntity)adapter.getData().get(position)).getIsFollow() == 1) {
-                            viewModel.unFollower((UserFollowerInfoEntity)adapter.getData().get(position));
+                            viewModel.unFollower((UserFollowerInfoEntity)adapter.getData().get(position),position);
                         } else {
-                            viewModel.follow((UserFollowerInfoEntity)adapter.getData().get(position));
+                            viewModel.follow((UserFollowerInfoEntity)adapter.getData().get(position),position);
                         }
                         break;
                     default:

@@ -43,7 +43,9 @@ public class UserFollowerInfoEntity {
      */
     private String userCity;
     /**
-     * 是否已关注
+     * 是否已经关注
+     * 0:未关注
+     * 1:已关注
      */
     private int isFollow;
 

@@ -28,7 +28,7 @@ public class ThemeAdapter extends BaseQuickAdapter<ThemeEntity, BaseViewHolder> 
         Glide.with(mContext).load(item.getThemeHeaderImage()).into((CircleImageView) helper.getView(R.id.civ_header));
         // check is already follow.
         Button btFollow = helper.getView(R.id.bt_follow);
-        if (item.isFollow()) {
+        if (item.isFollowed()) {
             btFollow.setBackgroundResource(R.drawable.follower_gray);
             btFollow.setText("已关注");
         } else {

@@ -9,6 +9,7 @@
     <string name="home">首页</string>
     <string name="follower">粉丝</string>
     <string name="following">关注</string>
+    <string name="theme">主题</string>
     <string name="dynamic">动态</string>
     <string name="default_size">0</string>
     <string name="default_nickname">点击登录账号</string>
