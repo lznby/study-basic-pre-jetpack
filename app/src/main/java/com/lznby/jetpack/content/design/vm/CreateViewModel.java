@@ -82,6 +82,7 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity, List<
                                     return o;
                             }
                         })
+                        .observeOn(Schedulers.io())
                         .doOnNext(
                                 // 上传压缩后的图片到到Oss服务器
                                 o -> ossUrls.add(OssUtils.uploadImage(activity.getActivity(), getSts(), o.getPath()))
@@ -124,4 +125,43 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity, List<
         // 获自己已经关注了的主题
 
     }
+
+    /**
+     * 压缩并上传图片 应该要设置上传类型
+     */
+//    private void uploadZipImage() {
+//                // 上传到到服务器的图片过多会有一些问题(OOM)
+//                list.add(
+//                        Flowable.fromIterable(urls)
+//                                .map(File::new)
+//                                .doOnNext(
+//                                        o -> zipFiles.add(new Compressor(this).compressToFile(o))
+//                                )
+//                                .doOnComplete(() -> {
+//                                    MultipartBody.Part[] file = new MultipartBody.Part[urls.size()];
+//                                    for (int i = 0; i < zipFiles.size(); i++) {
+//                                        RequestBody requestFile = RequestBody.create(MediaType.parse(FileUtils.getFileContentType(urls.get(i))), zipFiles.get(i));
+//                                        file[i] = MultipartBody.Part.createFormData("files", zipFiles.get(i).getName(), requestFile);
+//                                    }
+//                                    viewModel.uploadImages(file);
+//                                }).subscribe()
+//                );
+//
+//                一波的写法
+//                list.add(
+//                        Observable.fromIterable(urls)
+//                                .map(File::new)
+//                                .doOnNext(o -> zipFiles.add(new Compressor(this).compressToFile(o)))
+//                                .toList().toObservable()
+//                                .subscribeOn(Schedulers.newThread())
+//                                .map(files -> {
+//                                    MultipartBody.Part[] file = new MultipartBody.Part[urls.size()];
+//                                    for (int i = 0; i < zipFiles.size(); i++) {
+//                                        RequestBody requestFile = RequestBody.create(MediaType.parse(FileUtils.getFileContentType(urls.get(i))), zipFiles.get(i));
+//                                        file[i] = MultipartBody.Part.createFormData("files", zipFiles.get(i).getName(), requestFile);
+//                                    }
+//                                    return file;
+//                                }).subscribe(files -> viewModel.uploadImages(files))
+//                );
+//    }
 }

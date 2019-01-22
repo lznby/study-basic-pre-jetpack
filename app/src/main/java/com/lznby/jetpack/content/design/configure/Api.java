@@ -37,12 +37,12 @@ public interface Api {
     /**
      * 公司局域网IP
      */
-    String HOST = "http://172.16.66.145:8080";
+//    String HOST = "http://172.16.66.145:8080";
 
     /**
      * 阿里云公网IP
      */
-//    String HOST = "http://39.108.138.218/android/";
+    String HOST = "http://39.108.138.218/android/";
 
     /**
      * register interface
@@ -200,13 +200,15 @@ public interface Api {
 
     /**
      * OSS Sts Service.
+     *
+     * @return
      */
     @GET("oss/sts")
     Observable<BaseEntity<StsModel>> getOssSts();
 
 
     /**
-     * 多文件上传
+     * 多文件上传(老接口)
      * https://www.daidingkang.cc/2016/06/17/Retrofit2-network-framework-parsing/
      *
      * @param parts 含图片
@@ -315,5 +317,66 @@ public interface Api {
     Observable<BaseEntity<List<ThemeEntity>>> findAllTheme(
             @Header("userCookies") String userCookies
     );
+
+    /**
+     * 新增主题信息
+     *
+     * @param userCookies       用户Cookies
+     * @param themeName         主题名称
+     * @param themeNote         主题简介
+     * @param themeImage        主题背景图OSS地址
+     * @param themeHeaderImage  主题头像图OSS地址
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("theme/createTheme")
+    Observable<BaseEntity> createTheme(
+            @Header("userCookies") String userCookies,
+            @Field("themeName") String themeName,
+            @Field("themeNote") String themeNote,
+            @Field("themeImage") String themeImage,
+            @Field("themeHeaderImage") String themeHeaderImage
+    );
+
+    /**
+     * 获取所有资讯(发现-资讯)
+     *
+     * @param userCookies       用户Cookies
+     * @return
+     */
+    @GET("article/getAllArticle")
+    Observable<BaseEntity<List<ArticleAllInfoEntity>>> getAllArticle(
+            @Header("userCookies") String userCookies
+    );
+
+    /**
+     * 收藏资讯
+     *
+     * @param userCookies       用户Cookies
+     * @param fileAttribution   资讯编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/articleSub")
+    Observable<BaseEntity> articleSub(
+            @Header("userCookies") String userCookies,
+            @Field("fileAttribution") String fileAttribution
+    );
+
+
+    /**
+     * 取消收藏资讯
+     *
+     * @param userCookies       用户Cookies
+     * @param fileAttribution   资讯编号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("article/articleUnSub")
+    Observable<BaseEntity> articleUnSub(
+            @Header("userCookies") String userCookies,
+            @Field("fileAttribution") String fileAttribution
+    );
+
 
 }

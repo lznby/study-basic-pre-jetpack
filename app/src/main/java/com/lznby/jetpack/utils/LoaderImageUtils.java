@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.lznby.jetpack.configure.GlideApp;
@@ -29,17 +27,15 @@ public class LoaderImageUtils {
      */
     public static void loaderCircleImageView(Context context, String url, @DrawableRes int res, CircleImageView view) {
         //设置图片圆角角度
-        RequestOptions requestOptions = RequestOptions.centerCropTransform()
-                //不做磁盘缓存
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                //不做内存缓存
-                .skipMemoryCache(true);
+        RequestOptions requestOptions = RequestOptions.centerCropTransform();
 
         //加载网络图片
         GlideApp.with(context)
                 .applyDefaultRequestOptions(requestOptions)
                 .load(url)
                 .placeholder(res)
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .into(view);
     }
 
@@ -60,6 +56,8 @@ public class LoaderImageUtils {
         GlideApp.with(context)
                 .load(res)
                 .apply(RequestOptions.bitmapTransform(multiTransformation))
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .into(view);
     }
 
@@ -70,7 +68,12 @@ public class LoaderImageUtils {
      * @param view
      */
     public static void loaderLocalImageView(Context context, @DrawableRes int res ,ImageView view) {
-        Glide.with(context).load(res).into(view);
+        GlideApp
+                .with(context)
+                .load(res)
+                .skipMemoryCache(false)
+                .dontAnimate()
+                .into(view);
     }
 
 
@@ -83,17 +86,15 @@ public class LoaderImageUtils {
      */
     public static void loaderImageView(Context context, String url, @DrawableRes int res, ImageView view) {
         //设置图片圆角角度
-        RequestOptions requestOptions = RequestOptions.centerCropTransform()
-                //不做磁盘缓存
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                //不做内存缓存
-                .skipMemoryCache(true);
+        RequestOptions requestOptions = RequestOptions.centerCropTransform();
 
         //加载网络图片
         GlideApp.with(context)
                 .applyDefaultRequestOptions(requestOptions)
                 .load(url)
                 .placeholder(res)
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .into(view);
     }
 
@@ -105,12 +106,15 @@ public class LoaderImageUtils {
      * @param view
      */
     public static void loaderUrlImage(Context context, String url, ImageView view) {
-        Glide.with(context)
+        GlideApp.with(context)
                 .load(url)
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .into(view);
     }
 
     /**
+     * 加载中心地图
      *
      * @param context
      * @param url
@@ -120,6 +124,8 @@ public class LoaderImageUtils {
         GlideApp.with(context)
                 .load(url)
                 .centerCrop()
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .into(view);
     }
 

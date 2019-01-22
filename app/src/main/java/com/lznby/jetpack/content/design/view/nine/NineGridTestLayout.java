@@ -34,6 +34,8 @@ public class NineGridTestLayout extends NineGridLayout {
         // 这边可以单独设置图片的大小
         GlideApp.with(mContext)
                 .load(url.getFilePath())
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .into(imageView);
         return false;
     }
@@ -42,6 +44,8 @@ public class NineGridTestLayout extends NineGridLayout {
     protected void displayImage(RatioImageView imageView, FilePathEntity url) {
         GlideApp.with(mContext)
                 .load(url.getFilePath())
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .into(imageView);
     }
 

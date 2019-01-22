@@ -90,6 +90,8 @@
         <activity android:name=".content.design.ui.ImageWatcherActivity">
 
         </activity>
+        <!-- 主题创建 -->
+        <activity android:name=".content.design.ui.CreateThemeActivity"/>
         <!-- file provider -->
         <provider
             android:authorities="com.lznby.jetpack.android.provider"

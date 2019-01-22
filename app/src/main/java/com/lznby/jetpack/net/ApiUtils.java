@@ -48,7 +48,7 @@ public enum ApiUtils {
                 // HTTP过滤器 方便日志打印查看
                 .addInterceptor(new HttpLoggingInterceptor())
                 // 添加GET请求缓存,缓存大小为10Mib
-                .cache(CacheUtils.getCache(context, 10))
+                .cache(CacheUtils.getCache(context, 20))
                 .build().newBuilder();
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

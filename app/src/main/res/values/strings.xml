@@ -32,6 +32,7 @@
     <string name="who_am_i">我是谁</string>
     <string name="default_time">2019-01-09 23:23:23</string>
     <string name="default_content">写一些你想写的东西....</string>
+    <string name="default_title">主题名称....</string>
     <string name="theme_list">主题列表</string>
     <string name="image">详情</string>
 
@@ -39,6 +40,7 @@
     <string name="create">新建资讯</string>
     <!-- 发布资讯 -->
     <string name="publish">发布</string>
+    <string name="create_theme">创建主题</string>
 
     <string name="content">
         Material design是最重视跨平台体验的一套设计语言。由于规范严格细致，保证它在各个平台使用体验高度一致。不过目前还只有Google自家的服务这么做，毕竟其他平台有自己的规范与风格。
@@ -53,5 +55,9 @@
         Material design是最重视跨平台体验的一套设计语言。由于规范严格细致，保证它在各个平台使用体验高度一致。不过目前还只有Google自家的服务这么做，毕竟其他平台有自己的规范与风格。
         Material design是最重视跨平台体验的一套设计语言。由于规范严格细致，保证它在各个平台使用体验高度一致。不过目前还只有Google自家的服务这么做，毕竟其他平台有自己的规范与风格。
     </string>
+    <string name="default_theme_name">主题名称</string>
+    <string name="default_theme_note">这里是简介啊！</string>
+    <string name="default_count">999</string>
+    <string name="default_create">资讯创建人</string>
 
 </resources>

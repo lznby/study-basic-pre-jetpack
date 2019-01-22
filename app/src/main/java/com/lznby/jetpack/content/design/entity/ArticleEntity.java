@@ -35,15 +35,15 @@ public class ArticleEntity {
     /**
      * 阅读数记录
      */
-    String readCount;
+    int readCount;
     /**
      * 喜欢数记录
      */
-    String loveCount;
+    int loveCount;
     /**
      * 评论数记录
      */
-    String commentCount;
+    int commentCount;
     /**
      * 资讯文件类型
      */
@@ -97,27 +97,27 @@ public class ArticleEntity {
         this.themeId = themeId;
     }
 
-    public String getReadCount() {
+    public int getReadCount() {
         return readCount;
     }
 
-    public void setReadCount(String readCount) {
+    public void setReadCount(int readCount) {
         this.readCount = readCount;
     }
 
-    public String getLoveCount() {
+    public int getLoveCount() {
         return loveCount;
     }
 
-    public void setLoveCount(String loveCount) {
+    public void setLoveCount(int loveCount) {
         this.loveCount = loveCount;
     }
 
-    public String getCommentCount() {
+    public int getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(String commentCount) {
+    public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
     }
 

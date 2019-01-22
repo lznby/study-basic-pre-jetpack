@@ -16,20 +16,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.BarUtils;
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.base.BaseActivity;
 import com.lznby.jetpack.content.design.adapter.ArticleItemAdapter;
-import com.lznby.jetpack.content.design.configure.CacheConfigure;
 import com.lznby.jetpack.content.design.configure.Configure;
 import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.configure.RouterConfigure;
+import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.ArticleDetailsRouterEntity;
 import com.lznby.jetpack.content.design.entity.PersonalHomePageEntity;
 import com.lznby.jetpack.content.design.view.AppBarLayoutStateChangeListener;
 import com.lznby.jetpack.content.design.vm.HomePageViewModel;
 import com.lznby.jetpack.utils.LoaderImageUtils;
+import com.lznby.jetpack.utils.ToastUtils;
 
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -102,8 +102,6 @@ public class HomePageActivity extends BaseActivity<HomePageViewModel,PersonalHom
                 }
             }
         });
-        // 初次加载个人主页信息
-        viewModel.getHomePageViewModel(CacheConfigure.getToken(this),CacheConfigure.getUserId(this));
         //
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvArticle.setLayoutManager(manager);
@@ -126,13 +124,33 @@ public class HomePageActivity extends BaseActivity<HomePageViewModel,PersonalHom
         // 设置空布局样式
         adapter.setEmptyView(EmptyRvPage.getEmptyView(rvArticle));
 
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.itv_comment_count:
+                        // todo 评论
+                        ToastUtils.shortToast(HomePageActivity.this,"评论");
+                        break;
+                    case R.id.itv_love_count:
+                        // 收藏
+                        if (viewModel.getLiveData().getValue().getArticleAllInfoEntities().get(position).isLove()) {
+                            viewModel.articleUnSub(((ArticleAllInfoEntity)adapter.getData().get(position)).getArticleEntity().getFileAttribution(),position);
+                        } else {
+                            viewModel.articleSub(((ArticleAllInfoEntity)adapter.getData().get(position)).getArticleEntity().getFileAttribution(),position);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
     }
 
     @Override
     protected void bindView(PersonalHomePageEntity entity) {
-        Glide.with(this)
-                .load(entity.getUserBaseInfoEntity().getUserHeaderUrl())
-                .into(ivTitle);
+        LoaderImageUtils.loaderUrlCenterImage(this,entity.getUserBaseInfoEntity().getUserHeaderUrl(),ivTitle);
         ctlLayout.setTitle(entity.getUserBaseInfoEntity().getUserNickName());
         toolbar.setTitle(entity.getUserBaseInfoEntity().getUserNickName());
         LoaderImageUtils.loaderCircleImageView(this, (entity.getUserBaseInfoEntity() != null) ? (entity.getUserBaseInfoEntity().getUserHeaderUrl()) : Configure.DefaultValue.DEFAULT_IMAGE_URL, Configure.DefaultValue.DEFAULT_IAMGE_RES, civHeader);

@@ -25,8 +25,8 @@ import io.reactivex.schedulers.Schedulers;
 public class DiscoveryThemeViewModel extends BaseFragmentViewModel<DiscoveryThemeFragment,CenterActivity,List<ThemeEntity>> {
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onResume() {
+        super.onResume();
         getThemeInfo();
     }
 
@@ -38,11 +38,11 @@ public class DiscoveryThemeViewModel extends BaseFragmentViewModel<DiscoveryThem
                 IApplication.api.findAllTheme(CacheConfigure.getToken(getActivityContent()))
                 .compose(new RestfulTransformer<>())
                 .observeOn(Schedulers.io())
-                .subscribe(this::onOnNext,Throwable::printStackTrace)
+                .subscribe(this::doOnNext,Throwable::printStackTrace)
         );
     }
 
-    private void onOnNext(List<ThemeEntity> themeEntities) {
+    private void doOnNext(List<ThemeEntity> themeEntities) {
         getLiveData().postValue(themeEntities);
     }
 

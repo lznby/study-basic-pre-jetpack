@@ -91,23 +91,26 @@
                             app:layout_constraintTop_toBottomOf="@+id/rv_image">
 
                             <com.lznby.jetpack.content.design.view.ImageTextView
+                                android:id="@+id/itv_read_count"
                                 style="@style/image_text_action"
                                 android:drawableLeft="@mipmap/icon_read_count"
-                                android:text="100"
+                                android:text="@string/default_count"
                                 app:drawableLeftHeight="24dp"
                                 app:drawableLeftWidth="24dp"/>
 
                             <com.lznby.jetpack.content.design.view.ImageTextView
+                                android:id="@+id/itv_comment_count"
                                 style="@style/image_text_action"
                                 android:drawableLeft="@mipmap/icon_commit"
-                                android:text="100"
+                                android:text="@string/default_count"
                                 app:drawableLeftHeight="24dp"
                                 app:drawableLeftWidth="24dp"/>
 
                             <com.lznby.jetpack.content.design.view.ImageTextView
+                                android:id="@+id/itv_love_count"
                                 style="@style/image_text_action"
                                 android:drawableLeft="@mipmap/icon_love_gray"
-                                android:text="999"
+                                android:text="@string/default_count"
                                 app:drawableLeftHeight="24dp"
                                 app:drawableLeftWidth="24dp"/>
 

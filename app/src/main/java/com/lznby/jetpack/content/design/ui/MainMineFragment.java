@@ -53,7 +53,7 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     @Override
     protected void bindView(LoginEntity entity) {
         mTvNickname.setText((entity != null) ? (entity.getUserBaseInfoEntity().getUserNickName()) : "点击登录账号");
-        LoaderImageUtils.loaderCircleImageView(getActivity(), (entity != null) ? (entity.getUserBaseInfoEntity().getUserHeaderUrl()) : Configure.DefaultValue.DEFAULT_IMAGE_URL, Configure.DefaultValue.DEFAULT_IAMGE_RES, mIvHeader);
+        LoaderImageUtils.loaderUrlCenterImage(getActivity(), (entity != null) ? (entity.getUserBaseInfoEntity().getUserHeaderUrl()) : Configure.DefaultValue.DEFAULT_IMAGE_URL, mIvHeader);
         mTvMotto.setText(entity != null ? entity.getUserBaseInfoEntity().getUserMotto() : "");
     }
 
@@ -179,7 +179,7 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
             @Override
             public void doSomething() {
                 //跳转到创建主题
-                toastUtils("创建主题");
+                RouterConfigure.checkLoginRouterUtils(viewModel.activity.getActivity(), CreateThemeActivity.class);
             }
         });
     }

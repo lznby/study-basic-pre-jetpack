@@ -14,15 +14,18 @@ import com.lznby.jetpack.base.BaseActivity;
 import com.lznby.jetpack.content.design.configure.Configure;
 import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.ArticleDetailsRouterEntity;
+import com.lznby.jetpack.content.design.view.ImageTextView;
 import com.lznby.jetpack.content.design.view.nine.NineGridTestLayout;
 import com.lznby.jetpack.content.design.vm.ArticleDetailsViewModel;
 import com.lznby.jetpack.utils.FileUtils;
 import com.lznby.jetpack.utils.LoaderImageUtils;
+import com.lznby.jetpack.utils.ToastUtils;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -30,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  *
  * @author Lznby
  */
-public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel,ArticleAllInfoEntity> {
+public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel, ArticleAllInfoEntity> {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -42,9 +45,14 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
     TextView tvContext;
     @BindView(R.id.tv_create_time)
     TextView tvCreateTime;
-
     @BindView(R.id.fl_container)
     FrameLayout frameLayout;
+    @BindView(R.id.itv_read_count)
+    ImageTextView itvReadCount;
+    @BindView(R.id.itv_comment_count)
+    ImageTextView itvCommentCount;
+    @BindView(R.id.itv_love_count)
+    ImageTextView itvLoveCount;
 
     /**
      * 资讯Intent传参
@@ -79,11 +87,11 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
         });
         // 根据类型设置动态加载资讯布局
         if (FileUtils.VIDEO.equals(params.getType())) {
-            layoutView = View.inflate(this,R.layout.frame_video_player,null);
+            layoutView = View.inflate(this, R.layout.frame_video_player, null);
         } else if (FileUtils.AUDIO.equals(params.getType())) {
-            layoutView = View.inflate(this,R.layout.frame_audeo,null);
+            layoutView = View.inflate(this, R.layout.frame_audeo, null);
         } else {
-            layoutView = View.inflate(this,R.layout.frame_image,null);
+            layoutView = View.inflate(this, R.layout.frame_image, null);
         }
         frameLayout.addView(layoutView);
     }
@@ -96,28 +104,37 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
         tvCreateTime.setText(entity.getArticleEntity().getTime());
         tvContext.setText(entity.getArticleEntity().getContent());
 
+        itvReadCount.setText(String.valueOf(entity.getArticleEntity().getReadCount()));
+        itvCommentCount.setText(String.valueOf(entity.getArticleEntity().getCommentCount()));
+        itvLoveCount.setText(String.valueOf(entity.getArticleEntity().getLoveCount()));
+
+        if (entity.isLove()) {
+            itvLoveCount.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.mipmap.icon_love_red), null, null, null);
+        } else {
+            itvLoveCount.setCompoundDrawablesWithIntrinsicBounds(getDrawable(R.mipmap.icon_love_gray), null, null, null);
+        }
         // 设置动态部分资讯内容
         if (FileUtils.VIDEO.equals(params.getType())) {
             // 视屏
             initVideoPlayer(entity);
         } else if (FileUtils.AUDIO.equals(params.getType())) {
             // 音频
-            ((TextView)findViewById(R.id.tv_video)).setText("我是音频");
+            ((TextView) findViewById(R.id.tv_video)).setText("我是音频");
         } else {
             // 图片
-            ((NineGridTestLayout)findViewById(R.id.rv_image)).setUrlList(entity.getFilePathEntities());
+            ((NineGridTestLayout) findViewById(R.id.rv_image)).setUrlList(entity.getFilePathEntities());
         }
     }
 
     /**
      * 初始化视频播放器
      */
-    private void initVideoPlayer(ArticleAllInfoEntity entity){
-        videoPlayer =  findViewById(R.id.video_player);
+    private void initVideoPlayer(ArticleAllInfoEntity entity) {
+        videoPlayer = findViewById(R.id.video_player);
         videoPlayer.setUp(entity.getFilePathEntities().get(0).getFilePath(), true, entity.getArticleEntity().getContent());
         //增加封面
         ImageView imageView = new ImageView(this);
-        LoaderImageUtils.loaderImageView(this,entity.getFilePathEntities().get(0).getFilePath(),R.mipmap.background,imageView);
+        LoaderImageUtils.loaderImageView(this, entity.getFilePathEntities().get(0).getFilePath(), R.mipmap.background, imageView);
         videoPlayer.setThumbImageView(imageView);
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
@@ -144,13 +161,32 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
         videoPlayer.startPlayLogic();
     }
 
+    @OnClick({R.id.itv_love_count, R.id.itv_comment_count})
+    public void onViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.itv_love_count:
+                // 收藏
+                if (viewModel.getLiveData().getValue().isLove()) {
+                    viewModel.articleUnSub(viewModel.getLiveData().getValue().getArticleEntity().getFileAttribution());
+                } else {
+                    viewModel.articleSub(viewModel.getLiveData().getValue().getArticleEntity().getFileAttribution());
+                }
+                break;
+            case R.id.itv_comment_count:
+                ToastUtils.shortToast(this, "评论");
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * 视屏播放器释放
      */
     @Override
     protected void onPause() {
         super.onPause();
-        if (videoPlayer !=null) {
+        if (videoPlayer != null) {
             videoPlayer.onVideoPause();
         }
     }
@@ -158,7 +194,7 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
     @Override
     protected void onResume() {
         super.onResume();
-        if (videoPlayer !=null) {
+        if (videoPlayer != null) {
             videoPlayer.onVideoResume();
         }
     }
@@ -174,18 +210,18 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
 
     @Override
     public void onBackPressed() {
-        //先返回正常状态
-        if (orientationUtils!=null) {
+        // 先返回正常状态
+        if (orientationUtils != null) {
             if (orientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                if (videoPlayer!=null) {
+                if (videoPlayer != null) {
                     videoPlayer.getFullscreenButton().performClick();
                 }
                 return;
             }
         }
 
-        //释放所有
-        if (videoPlayer!=null) {
+        // 释放所有
+        if (videoPlayer != null) {
             videoPlayer.setVideoAllCallBack(null);
         }
         super.onBackPressed();

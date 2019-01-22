@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.content.design.configure.Configure;
 import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
+import com.lznby.jetpack.content.design.view.ImageTextView;
 import com.lznby.jetpack.content.design.view.nine.NineGridTestLayout;
 import com.lznby.jetpack.utils.FileUtils;
 import com.lznby.jetpack.utils.LoaderImageUtils;
@@ -23,6 +24,8 @@ public class ArticleItemAdapter extends BaseQuickAdapter<ArticleAllInfoEntity, B
 
     public ArticleItemAdapter() {
         super(R.layout.item_article);
+        // 1.防止数据变更时闪烁
+        this.setHasStableIds(true);
     }
 
     @Override
@@ -31,6 +34,17 @@ public class ArticleItemAdapter extends BaseQuickAdapter<ArticleAllInfoEntity, B
         helper.setText(R.id.tv_nickname, item.getUserBaseInfoEntity().getUserNickName());
         helper.setText(R.id.tv_create_time, item.getArticleEntity().getTime());
         helper.setText(R.id.tv_content, item.getArticleEntity().getContent());
+
+        helper.setText(R.id.itv_read_count,String.valueOf(item.getArticleEntity().getReadCount()));
+        helper.setText(R.id.itv_comment_count,String.valueOf(item.getArticleEntity().getCommentCount()));
+        helper.setText(R.id.itv_love_count,String.valueOf(item.getArticleEntity().getLoveCount()));
+
+        // 设置是否收藏样式
+        if (item.isLove()) {
+            ((ImageTextView)helper.getView(R.id.itv_love_count)).setCompoundDrawablesWithIntrinsicBounds(mContext.getDrawable(R.mipmap.icon_love_red),null,null,null);
+        } else {
+            ((ImageTextView)helper.getView(R.id.itv_love_count)).setCompoundDrawablesWithIntrinsicBounds(mContext.getDrawable(R.mipmap.icon_love_gray),null,null,null);
+        }
 
         // 动态填充不同类型的内容
         View layoutView;
@@ -61,8 +75,14 @@ public class ArticleItemAdapter extends BaseQuickAdapter<ArticleAllInfoEntity, B
                 break;
         }
 
-
+        // 设置item child 监听.
+        helper.addOnClickListener(R.id.itv_love_count);
+        helper.addOnClickListener(R.id.itv_comment_count);
     }
 
-
+    @Override
+    public long getItemId(int position) {
+        // 重写getItemId防止数据刷新时闪烁
+        return position;
+    }
 }
