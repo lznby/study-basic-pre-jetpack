@@ -25,6 +25,16 @@ public class DiscoveryArticleAdapter extends BaseQuickAdapter<ArticleAllInfoEnti
         helper.setText(R.id.itv_read_count, String.valueOf(item.getArticleEntity().getReadCount()));
         helper.setText(R.id.itv_comment_count, String.valueOf(item.getArticleEntity().getCommentCount()));
         helper.setText(R.id.itv_love_count, String.valueOf(item.getArticleEntity().getLoveCount()));
+        if (item.getThemeEntities()!=null) {
+            if (item.getThemeEntities().size()>0) {
+                helper.setVisible(R.id.tv_theme,true);
+                helper.setText(R.id.tv_theme, item.getThemeEntities().get(0).getThemeName());
+            } else {
+                helper.setVisible(R.id.tv_theme,false);
+            }
+        } else {
+            helper.setVisible(R.id.tv_theme,false);
+        }
         if (item.getFilePathEntities().size() > 0) {
             LoaderImageUtils.loaderUrlCenterImage(mContext,item.getFilePathEntities().get(0).getFilePath(),helper.getView(R.id.iv_image));
             helper.setVisible(R.id.cl_layout,true);

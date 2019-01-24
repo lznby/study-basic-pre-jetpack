@@ -37,6 +37,7 @@
     <string name="image">详情</string>
     <string name="nickname">昵称</string>
     <string name="city">城市</string>
+    <string name="article">资讯</string>
 
     <!-- 个人主页 -->
     <string name="create">新建资讯</string>
@@ -61,5 +62,6 @@
     <string name="default_theme_note">这里是简介啊！</string>
     <string name="default_count">999</string>
     <string name="default_create">资讯创建人</string>
+    <string name="empty">空空如也</string>
 
 </resources>

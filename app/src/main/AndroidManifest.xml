@@ -94,6 +94,8 @@
         <activity android:name=".content.design.ui.CreateThemeActivity"/>
         <!-- 资讯收藏 -->
         <activity android:name=".content.design.ui.ArticleSubscribeActivity"/>
+        <!-- 主题首页 -->
+        <activity android:name=".content.design.ui.ThemePageActivity"/>
         <!-- file provider -->
         <provider
             android:authorities="com.lznby.jetpack.android.provider"

@@ -1,5 +1,6 @@
 package com.lznby.jetpack.content.design.ui;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.lznby.jetpack.base.BaseFragment;
 import com.lznby.jetpack.content.design.adapter.DiscoveryArticleAdapter;
 import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
+import com.lznby.jetpack.content.design.entity.ArticleDetailsRouterEntity;
 import com.lznby.jetpack.content.design.vm.DiscoveryArticleViewModel;
 import com.lznby.jetpack.utils.ToastUtils;
 
@@ -66,6 +68,15 @@ public class DiscoveryArticleFragment extends BaseFragment<DiscoveryArticleViewM
                     default:
                         break;
                 }
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ArticleAllInfoEntity entity = (ArticleAllInfoEntity)adapter.getData().get(position);
+                Intent intent = new Intent(getContext(),ArticleDetailsActivity.class);
+                intent.putExtra(ArticleDetailsRouterEntity.KEY,new ArticleDetailsRouterEntity(entity.getArticleEntity().getType(),entity.getArticleEntity().getFileAttribution()));
+                startActivity(intent);
             }
         });
     }

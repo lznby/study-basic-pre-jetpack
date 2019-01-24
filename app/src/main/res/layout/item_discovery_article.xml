@@ -33,6 +33,23 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_image"
                 app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/follower_blue"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="2dp"
+                android:text="@string/theme"
+                android:textColor="@color/colorWhite2"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_nickname"
+                app:layout_constraintStart_toEndOf="@+id/tv_nickname"
+                app:layout_constraintTop_toTopOf="@+id/tv_nickname"/>
+
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout

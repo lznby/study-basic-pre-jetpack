@@ -1,5 +1,6 @@
 package com.lznby.jetpack.content.design.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.lznby.jetpack.base.BaseActivity;
 import com.lznby.jetpack.content.design.adapter.ThemeAdapter;
 import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.ThemeEntity;
+import com.lznby.jetpack.content.design.entity.ThemePageRouterEntity;
 import com.lznby.jetpack.content.design.entity.ThemeRouterEntity;
 import com.lznby.jetpack.content.design.vm.ThemeViewModel;
 
@@ -83,6 +85,16 @@ public class ThemeActivity extends BaseActivity<ThemeViewModel,List<ThemeEntity>
                 }
             }
         });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ThemeEntity entity = (ThemeEntity)adapter.getData().get(position);
+                Intent intent = new Intent(ThemeActivity.this,ThemePageActivity.class);
+                intent.putExtra(ThemePageRouterEntity.KEY,new ThemePageRouterEntity(entity.getThemeId()));
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

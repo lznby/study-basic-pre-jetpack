@@ -6,6 +6,7 @@ import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.LoginEntity;
 import com.lznby.jetpack.content.design.entity.PersonalHomePageEntity;
 import com.lznby.jetpack.content.design.entity.ThemeEntity;
+import com.lznby.jetpack.content.design.entity.ThemeHomePageEntity;
 import com.lznby.jetpack.content.design.entity.UserBaseInfoEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerInfoEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerSizeEntity;
@@ -37,12 +38,12 @@ public interface Api {
     /**
      * 公司局域网IP
      */
-//    String HOST = "http://172.16.66.156:8080";
+    String HOST = "http://172.16.66.156:8080";
 
     /**
      * 阿里云公网IP
      */
-    String HOST = "http://39.108.138.218/android/";
+//    String HOST = "http://39.108.138.218/android/";
 
     /**
      * register interface
@@ -400,6 +401,19 @@ public interface Api {
     Observable<BaseEntity<List<ArticleAllInfoEntity>>> getAllSubArticle(
             @Header("userCookies") String userCookies,
             @Query("userId") String userId
+    );
+
+    /**
+     * 主题首页信息
+     *
+     * @param userCookies       用户Cookies
+     * @param themeId           查询的主题Id
+     * @return                  主题页信息
+     */
+    @GET("theme/findArticleByThemeId")
+    Observable<BaseEntity<ThemeHomePageEntity>> findArticleByThemeId(
+            @Header("userCookies") String userCookies,
+            @Query("themeId") String themeId
     );
 
 

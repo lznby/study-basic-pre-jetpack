@@ -1,5 +1,6 @@
 package com.lznby.jetpack.content.design.ui;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.lznby.jetpack.base.BaseFragment;
 import com.lznby.jetpack.content.design.adapter.DiscoveryThemeAdapter;
 import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.ThemeEntity;
+import com.lznby.jetpack.content.design.entity.ThemePageRouterEntity;
 import com.lznby.jetpack.content.design.vm.DiscoveryThemeViewModel;
 
 import java.util.List;
@@ -60,6 +62,15 @@ public class DiscoveryThemeFragment extends BaseFragment<DiscoveryThemeViewModel
                     default:
                         break;
                 }
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                ThemeEntity entity = (ThemeEntity)adapter.getData().get(position);
+                Intent intent = new Intent(getContext(),ThemePageActivity.class);
+                intent.putExtra(ThemePageRouterEntity.KEY,new ThemePageRouterEntity(entity.getThemeId()));
+                startActivity(intent);
             }
         });
     }

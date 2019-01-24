@@ -1,5 +1,6 @@
 package com.lznby.jetpack.content.design.ui;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -10,10 +11,10 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -22,7 +23,9 @@ import com.google.gson.Gson;
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.base.BaseActivity;
 import com.lznby.jetpack.content.design.adapter.SelectorAdapter;
+import com.lznby.jetpack.content.design.adapter.SpinnerThemeAdapter;
 import com.lznby.jetpack.content.design.entity.FileEntity;
+import com.lznby.jetpack.content.design.entity.ThemeEntity;
 import com.lznby.jetpack.content.design.view.GridSpacingItemDecoration;
 import com.lznby.jetpack.content.design.vm.CreateViewModel;
 import com.lznby.jetpack.utils.Glide4Engine;
@@ -40,6 +43,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * 创建资讯界面
@@ -66,6 +70,11 @@ public class CreateActivity extends BaseActivity<CreateViewModel, List<FileEntit
      * 选择文件路径集合
      */
     List<String> urls = new ArrayList<>();
+
+    /**
+     * 主题选择Adapter
+     */
+    SpinnerThemeAdapter themeAdapter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -94,6 +103,32 @@ public class CreateActivity extends BaseActivity<CreateViewModel, List<FileEntit
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        // 主题信息(选择框)
+        themeAdapter = new SpinnerThemeAdapter(this);
+        final Observer<List<ThemeEntity>> themes = new Observer<List<ThemeEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<ThemeEntity> themeEntities) {
+                //绑定UI
+                themeAdapter.setThemes(themeEntities);
+            }
+        };
+        viewModel.getThemesLiveData().observe(this,themes);
+        spTheme.setAdapter(themeAdapter);
+        spTheme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 当前选中信息
+                viewModel.getThemes().clear();
+                viewModel.getThemes().add(viewModel.getThemesLiveData().getValue().get(position).getThemeId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 无选择任何信息
+                viewModel.getThemes().clear();
             }
         });
 
@@ -145,10 +180,8 @@ public class CreateActivity extends BaseActivity<CreateViewModel, List<FileEntit
         switch (menuItem.getItemId()) {
             case R.id.menu_publish:
                 // 上传资讯
-                List<String> themes = new ArrayList<>();
-                themes.add("a182c5c9-203c-4394-964b-a59bec6d34e1");
                 Gson gson = new Gson();
-                viewModel.uploadImage(urls,"",etContent.getText().toString(),gson.toJson(themes));
+                viewModel.uploadImage(urls,"",etContent.getText().toString(),gson.toJson(viewModel.getThemes()));
                 break;
             default:
                 break;
@@ -221,7 +254,7 @@ public class CreateActivity extends BaseActivity<CreateViewModel, List<FileEntit
                     public void onSelected(
                             @NonNull List<Uri> uriList, @NonNull List<String> pathList) {
                         // DO SOMETHING IMMEDIATELY HERE
-                        Log.e("onSelected", "onSelected: pathList=" + pathList);
+                        Timber.e("onSelected: pathList=%s", pathList);
 
                     }
                 })
@@ -234,7 +267,7 @@ public class CreateActivity extends BaseActivity<CreateViewModel, List<FileEntit
                     public void onCheck(boolean isChecked) {
                         // DO SOMETHING IMMEDIATELY HERE
                         // 这里是用于预留压缩图片的
-                        Log.e("isChecked", "onCheck: isChecked=" + isChecked);
+                        Timber.e("onCheck: isChecked=%s", isChecked);
                     }
                 })
                 .forResult(ZHIHU_CHOOSE_IMAGE);

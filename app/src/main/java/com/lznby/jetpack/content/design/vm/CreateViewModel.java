@@ -1,14 +1,17 @@
 package com.lznby.jetpack.content.design.vm;
 
+import android.arch.lifecycle.MutableLiveData;
+
 import com.google.gson.Gson;
 import com.lznby.jetpack.base.BaseActivityViewModel;
-import com.lznby.jetpack.base.BaseEntity;
 import com.lznby.jetpack.configure.IApplication;
 import com.lznby.jetpack.content.design.alibaba.oss.model.StsModel;
 import com.lznby.jetpack.content.design.alibaba.oss.utils.OssUtils;
 import com.lznby.jetpack.content.design.configure.CacheConfigure;
 import com.lznby.jetpack.content.design.entity.FileEntity;
+import com.lznby.jetpack.content.design.entity.ThemeEntity;
 import com.lznby.jetpack.content.design.ui.CreateActivity;
+import com.lznby.jetpack.net.transform.RestfulTransformer;
 import com.lznby.jetpack.utils.FileUtils;
 import com.lznby.jetpack.utils.ToastUtils;
 
@@ -20,7 +23,6 @@ import id.zelory.compressor.Compressor;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MultipartBody;
 
 /**
  * 创建资讯界面ViewModel
@@ -31,21 +33,20 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity, List<
 
     private StsModel sts = new StsModel();
 
-    /**
-     * 上传资讯老的接口
-     *
-     * @param parts
-     */
-    public void uploadImages(MultipartBody.Part[] parts) {
-        addDisposable(
-                IApplication.api.uploadImage(parts)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::doOnNext, Throwable::printStackTrace)
-        );
-    }
+    private MutableLiveData<List<ThemeEntity>> themesLiveData;
 
-    private void doOnNext(BaseEntity entity) {
-        ToastUtils.shortToast(activity.getActivity(), entity.getMessage());
+    private List<String> themes;
+
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // 获取OSS动态的口令
+        getStsFromService();
+        // 获自己已经关注了的主题
+        getThemeInfo();
+
     }
 
     /**
@@ -113,55 +114,43 @@ public class CreateViewModel extends BaseActivityViewModel<CreateActivity, List<
         );
     }
 
+
+    /**
+     * 获取所有主题
+     */
+    private void getThemeInfo() {
+        addDisposable(
+                IApplication.api.findAllTheme(CacheConfigure.getToken(activity.getActivity()))
+                        .compose(new RestfulTransformer<>())
+                        .observeOn(Schedulers.io())
+                        .subscribe(this::doOnNext,Throwable::printStackTrace)
+        );
+    }
+
+    private void doOnNext(List<ThemeEntity> themeEntities) {
+        getThemesLiveData().postValue(themeEntities);
+    }
+
+    public MutableLiveData<List<ThemeEntity>> getThemesLiveData() {
+        if (themesLiveData == null) {
+            themesLiveData = new MutableLiveData<>();
+        }
+        return themesLiveData;
+    }
+
     private StsModel getSts() {
         return sts;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        // 获取OSS动态的口令
-        getStsFromService();
-        // 获自己已经关注了的主题
-
+    public List<String> getThemes() {
+        if (themes == null) {
+            themes = new ArrayList<>();
+        }
+        return themes;
     }
 
-    /**
-     * 压缩并上传图片 应该要设置上传类型
-     */
-//    private void uploadZipImage() {
-//                // 上传到到服务器的图片过多会有一些问题(OOM)
-//                list.add(
-//                        Flowable.fromIterable(urls)
-//                                .map(File::new)
-//                                .doOnNext(
-//                                        o -> zipFiles.add(new Compressor(this).compressToFile(o))
-//                                )
-//                                .doOnComplete(() -> {
-//                                    MultipartBody.Part[] file = new MultipartBody.Part[urls.size()];
-//                                    for (int i = 0; i < zipFiles.size(); i++) {
-//                                        RequestBody requestFile = RequestBody.create(MediaType.parse(FileUtils.getFileContentType(urls.get(i))), zipFiles.get(i));
-//                                        file[i] = MultipartBody.Part.createFormData("files", zipFiles.get(i).getName(), requestFile);
-//                                    }
-//                                    viewModel.uploadImages(file);
-//                                }).subscribe()
-//                );
-//
-//                一波的写法
-//                list.add(
-//                        Observable.fromIterable(urls)
-//                                .map(File::new)
-//                                .doOnNext(o -> zipFiles.add(new Compressor(this).compressToFile(o)))
-//                                .toList().toObservable()
-//                                .subscribeOn(Schedulers.newThread())
-//                                .map(files -> {
-//                                    MultipartBody.Part[] file = new MultipartBody.Part[urls.size()];
-//                                    for (int i = 0; i < zipFiles.size(); i++) {
-//                                        RequestBody requestFile = RequestBody.create(MediaType.parse(FileUtils.getFileContentType(urls.get(i))), zipFiles.get(i));
-//                                        file[i] = MultipartBody.Part.createFormData("files", zipFiles.get(i).getName(), requestFile);
-//                                    }
-//                                    return file;
-//                                }).subscribe(files -> viewModel.uploadImages(files))
-//                );
-//    }
+    public void setThemes(List<String> themes) {
+        this.themes = themes;
+    }
+
 }
