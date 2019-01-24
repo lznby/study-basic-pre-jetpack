@@ -12,7 +12,9 @@ import com.lznby.jetpack.base.callback.SimpleCallback;
 import com.lznby.jetpack.content.design.configure.CacheConfigure;
 import com.lznby.jetpack.content.design.configure.Configure;
 import com.lznby.jetpack.content.design.configure.RouterConfigure;
+import com.lznby.jetpack.content.design.entity.ArticleSubscribeRouterEntity;
 import com.lznby.jetpack.content.design.entity.FollowerRouterEntity;
+import com.lznby.jetpack.content.design.entity.HomePageRouterEntity;
 import com.lznby.jetpack.content.design.entity.LoginEntity;
 import com.lznby.jetpack.content.design.entity.ThemeRouterEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerSizeEntity;
@@ -53,7 +55,7 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     @Override
     protected void bindView(LoginEntity entity) {
         mTvNickname.setText((entity != null) ? (entity.getUserBaseInfoEntity().getUserNickName()) : "点击登录账号");
-        LoaderImageUtils.loaderUrlCenterImage(getActivity(), (entity != null) ? (entity.getUserBaseInfoEntity().getUserHeaderUrl()) : Configure.DefaultValue.DEFAULT_IMAGE_URL, mIvHeader);
+        LoaderImageUtils.loaderUrlCenterImage(viewModel.getActivityContent(), (entity != null) ? (entity.getUserBaseInfoEntity().getUserHeaderUrl()) : Configure.DefaultValue.DEFAULT_IMAGE_URL, mIvHeader);
         mTvMotto.setText(entity != null ? entity.getUserBaseInfoEntity().getUserMotto() : "");
     }
 
@@ -66,7 +68,7 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        viewModel.getMineUserInfo(CacheConfigure.getToken(getActivity()), CacheConfigure.getUserId(getActivity()));
+        viewModel.getMineUserInfo(CacheConfigure.getToken(viewModel.getActivityContent()), CacheConfigure.getUserId(getActivity()));
     }
 
     private void initSize(UserFollowerSizeEntity entity) {
@@ -114,8 +116,15 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     }
 
     void mineHomeRouter() {
-        // 跳转到主页
-        RouterConfigure.checkLoginRouterUtils(viewModel.activity.getActivity(), HomePageActivity.class);
+        RouterConfigure.isLoginRouter(viewModel.activity.getActivity(), new SimpleCallback() {
+            @Override
+            public void doSomething() {
+                // 跳转到个人主页
+                Intent intent = new Intent(getActivity(),HomePageActivity.class);
+                intent.putExtra(HomePageRouterEntity.KEY,new HomePageRouterEntity(CacheConfigure.getUserId(viewModel.getActivityContent())));
+                startActivity(intent);
+            }
+        });
     }
 
     void mineDynamicRouter() {
@@ -159,7 +168,9 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
             @Override
             public void doSomething() {
                 //跳转到我的收藏
-                toastUtils("我的收藏");
+                Intent intent = new Intent(getActivity(),ArticleSubscribeActivity.class);
+                intent.putExtra(ArticleSubscribeRouterEntity.KEY,new ArticleSubscribeRouterEntity(CacheConfigure.getUserId(getActivity())));
+                startActivity(intent);
             }
         });
     }
@@ -175,13 +186,7 @@ public class MainMineFragment extends BaseFragment<MineViewModel, CenterActivity
     }
 
     void mineThemeRouter() {
-        RouterConfigure.isLoginRouter(viewModel.activity.getActivity(), new SimpleCallback() {
-            @Override
-            public void doSomething() {
-                //跳转到创建主题
-                RouterConfigure.checkLoginRouterUtils(viewModel.activity.getActivity(), CreateThemeActivity.class);
-            }
-        });
+        RouterConfigure.checkLoginRouterUtils(viewModel.activity.getActivity(), CreateThemeActivity.class);
     }
 
     void toastUtils(String message) {

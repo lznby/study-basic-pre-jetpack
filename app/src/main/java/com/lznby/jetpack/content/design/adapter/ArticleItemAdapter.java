@@ -16,7 +16,7 @@ import com.lznby.jetpack.utils.LoaderImageUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * 图片展示控件
+ * 资讯展示控件
  *
  * @author Lznby
  */

@@ -30,7 +30,7 @@ public class CacheConfigure {
      * @return
      */
     public static LoginEntity getUserEntity(Context context) {
-        String userInfo = SpUtil.getValue(context,Configure.SpCache.SP_USER_INFO,"");
+        String userInfo = SpUtil.getValue(context,Configure.SpCache.SP_USER_INFO," ");
         if (StringUtils.isEmpty(userInfo.trim())) {
             return null;
         } else {
@@ -43,7 +43,7 @@ public class CacheConfigure {
      * get sp entity
      */
     public static Object getSpEntity(Context context,String spKey,Class clazz) {
-        String data = SpUtil.getValue(context,spKey,"");
+        String data = SpUtil.getValue(context,spKey," ");
         if (StringUtils.isEmpty(data.trim())) {
             return null;
         } else {
@@ -63,7 +63,7 @@ public class CacheConfigure {
         if (loginEntity!=null) {
             return loginEntity.getToken();
         } else {
-            return null;
+            return " ";
         }
     }
 
@@ -78,7 +78,7 @@ public class CacheConfigure {
         if (loginEntity!=null) {
             return loginEntity.getUserBaseInfoEntity().getUserId();
         } else {
-            return "";
+            return " ";
         }
     }
 

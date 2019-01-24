@@ -5,44 +5,47 @@ import com.lznby.jetpack.base.BaseEntity;
 import com.lznby.jetpack.configure.IApplication;
 import com.lznby.jetpack.content.design.configure.CacheConfigure;
 import com.lznby.jetpack.content.design.configure.Configure;
-import com.lznby.jetpack.content.design.entity.HomePageRouterEntity;
-import com.lznby.jetpack.content.design.entity.PersonalHomePageEntity;
-import com.lznby.jetpack.content.design.ui.HomePageActivity;
+import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
+import com.lznby.jetpack.content.design.entity.ArticleSubscribeRouterEntity;
+import com.lznby.jetpack.content.design.ui.ArticleSubscribeActivity;
+import com.lznby.jetpack.net.transform.RestfulTransformer;
 import com.lznby.jetpack.utils.ToastUtils;
 
+import java.util.List;
 import java.util.Objects;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
- * 个人主页ViewModel
+ * 资讯收藏-ViewModel
  *
  * @author Lznby
  */
-public class HomePageViewModel extends BaseActivityViewModel<HomePageActivity, PersonalHomePageEntity> {
+public class ArticleSubActivityViewModel extends BaseActivityViewModel<ArticleSubscribeActivity,List<ArticleAllInfoEntity>> {
 
     /**
-     * 决定读取谁的首页信息
+     * 取决于查询哪个用户的收藏
      */
-    private HomePageRouterEntity params;
+    private ArticleSubscribeRouterEntity params;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        // 初次加载个人主页信息
-        getHomePageViewModel(CacheConfigure.getToken(activity.getActivity()),params.getUserId());
+        getSubArticle(params.getUserId());
     }
 
-    private void getHomePageViewModel(String userCookies, String userId) {
+    public void getSubArticle(String userId) {
         addDisposable(
-                IApplication.api.getPersonalHomePage(userCookies, userId)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(this::doOnNext, Throwable::printStackTrace)
+                IApplication.api.getAllSubArticle(CacheConfigure.getToken(activity.getActivity()),userId)
+                .compose(new RestfulTransformer<>())
+                .observeOn(Schedulers.io())
+                .subscribe(this::doOnNext,Throwable::printStackTrace)
         );
     }
 
-    private void doOnNext(BaseEntity<PersonalHomePageEntity> entity) {
-        getLiveData().postValue(entity.getData());
+    private void doOnNext(List<ArticleAllInfoEntity> entity) {
+        getLiveData().postValue(entity);
     }
 
     /**
@@ -81,13 +84,13 @@ public class HomePageViewModel extends BaseActivityViewModel<HomePageActivity, P
      * @param position
      */
     private void updateUI(BaseEntity entity, boolean isLove, int position) {
-        if (Objects.requireNonNull(getLiveData().getValue()).getArticleAllInfoEntities().size()>position && entity.getCode()== Configure.ResponseCode.SUCCESS) {
+        if (Objects.requireNonNull(getLiveData().getValue()).size()>position && entity.getCode()== Configure.ResponseCode.SUCCESS) {
             if (isLove) {
-                getLiveData().getValue().getArticleAllInfoEntities().get(position).setLove(true);
-                getLiveData().getValue().getArticleAllInfoEntities().get(position).getArticleEntity().setLoveCount(getLiveData().getValue().getArticleAllInfoEntities().get(position).getArticleEntity().getLoveCount()+1);
+                getLiveData().getValue().get(position).setLove(true);
+                getLiveData().getValue().get(position).getArticleEntity().setLoveCount(getLiveData().getValue().get(position).getArticleEntity().getLoveCount()+1);
             } else {
-                getLiveData().getValue().getArticleAllInfoEntities().get(position).setLove(false);
-                getLiveData().getValue().getArticleAllInfoEntities().get(position).getArticleEntity().setLoveCount(getLiveData().getValue().getArticleAllInfoEntities().get(position).getArticleEntity().getLoveCount()-1);
+                getLiveData().getValue().get(position).setLove(false);
+                getLiveData().getValue().get(position).getArticleEntity().setLoveCount(getLiveData().getValue().get(position).getArticleEntity().getLoveCount()-1);
             }
             getLiveData().postValue(getLiveData().getValue());
         } else {
@@ -95,11 +98,11 @@ public class HomePageViewModel extends BaseActivityViewModel<HomePageActivity, P
         }
     }
 
-    public HomePageRouterEntity getParams() {
+    public ArticleSubscribeRouterEntity getParams() {
         return params;
     }
 
-    public void setParams(HomePageRouterEntity params) {
+    public void setParams(ArticleSubscribeRouterEntity params) {
         this.params = params;
     }
 }

@@ -23,9 +23,10 @@ import io.reactivex.schedulers.Schedulers;
  * @author Lznby
  */
 public class DiscoveryArticleViewModel extends BaseFragmentViewModel<DiscoveryArticleFragment, CenterActivity, List<ArticleAllInfoEntity>> {
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onCreate() {
+        super.onCreate();
         getArticleInfo();
     }
 

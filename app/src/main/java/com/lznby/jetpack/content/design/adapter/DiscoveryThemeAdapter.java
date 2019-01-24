@@ -20,7 +20,7 @@ public class DiscoveryThemeAdapter extends BaseQuickAdapter<ThemeEntity,BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, ThemeEntity item) {
-        helper.setText(R.id.tv_theme_name,item.getThemeName());
+        helper.setText(R.id.tv_nickname,item.getThemeName());
         helper.setText(R.id.tv_theme_note, item.getThemeNote());
         ((ImageTextView)helper.getView(R.id.itv_love_count)).setText(String.valueOf(item.getSubCount()));
         if (item.isFollowed()) {

@@ -35,6 +35,8 @@
     <string name="default_title">主题名称....</string>
     <string name="theme_list">主题列表</string>
     <string name="image">详情</string>
+    <string name="nickname">昵称</string>
+    <string name="city">城市</string>
 
     <!-- 个人主页 -->
     <string name="create">新建资讯</string>

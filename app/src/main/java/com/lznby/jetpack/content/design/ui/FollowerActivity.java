@@ -1,6 +1,7 @@
 package com.lznby.jetpack.content.design.ui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,13 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.base.BaseActivity;
+import com.lznby.jetpack.base.callback.SimpleCallback;
 import com.lznby.jetpack.content.design.adapter.FollowerAdapter;
 import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.FollowerRouterEntity;
+import com.lznby.jetpack.content.design.entity.HomePageRouterEntity;
 import com.lznby.jetpack.content.design.entity.UserFollowerInfoEntity;
 import com.lznby.jetpack.content.design.vm.FollowerViewModel;
 
@@ -61,11 +63,20 @@ public class FollowerActivity extends BaseActivity<FollowerViewModel, List<UserF
         mToolbar.setNavigationIcon(R.mipmap.icon_left_arrows);
         // get page data.
         viewModel.getData();
-        // set RecyclerView adapter.
-        followerAdapter = new FollowerAdapter();
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRvFollow.setLayoutManager(layoutManager);
+        // set RecyclerView adapter.
+        followerAdapter = new FollowerAdapter();
         mRvFollow.setAdapter(followerAdapter);
+        // set empty view.
+        followerAdapter.setEmptyView(EmptyRvPage.getEmptyView(mRvFollow, new SimpleCallback() {
+            @Override
+            public void doSomething() {
+                //
+                viewModel.getData();
+            }
+        }));
 
         followerAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -83,9 +94,16 @@ public class FollowerActivity extends BaseActivity<FollowerViewModel, List<UserF
                 }
             }
         });
-
-        // set empty view.
-        followerAdapter.setEmptyView(EmptyRvPage.getEmptyView(mRvFollow));
+        // 设置adapter的Item的点击事件
+        followerAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                UserFollowerInfoEntity entity = (UserFollowerInfoEntity)adapter.getData().get(position);
+                Intent intent = new Intent(FollowerActivity.this,HomePageActivity.class);
+                intent.putExtra(HomePageRouterEntity.KEY,new HomePageRouterEntity(FollowerRouterEntity.FOLLOWER.equals(params.getType()) ? String.valueOf(entity.getUserId()) : String.valueOf(entity.getFollowId())));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -97,7 +115,7 @@ public class FollowerActivity extends BaseActivity<FollowerViewModel, List<UserF
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
-            return true;
+            return false;
         }
         return super.onOptionsItemSelected(item);
     }

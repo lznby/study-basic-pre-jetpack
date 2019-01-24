@@ -37,7 +37,7 @@ public interface Api {
     /**
      * 公司局域网IP
      */
-//    String HOST = "http://172.16.66.145:8080";
+//    String HOST = "http://172.16.66.156:8080";
 
     /**
      * 阿里云公网IP
@@ -376,6 +376,30 @@ public interface Api {
     Observable<BaseEntity> articleUnSub(
             @Header("userCookies") String userCookies,
             @Field("fileAttribution") String fileAttribution
+    );
+
+    /**
+     * 获取所有用户信息(发现-用户)
+     *
+     * @param userCookies       用户Cookies
+     * @return                  所有用户信息
+     */
+    @GET("userBaseInfo/getAllUserBaseInfo")
+    Observable<BaseEntity<List<UserBaseInfoEntity>>> getAllUserBaseInfo(
+            @Header("userCookies") String userCookies
+    );
+
+    /**
+     * 查询某人所有收藏资讯
+     *
+     * @param userCookies       用户Cookies
+     * @param userId            被查询者Id
+     * @return                  被查询者所有收藏的资讯信息
+     */
+    @GET("article/getAllSubArticle")
+    Observable<BaseEntity<List<ArticleAllInfoEntity>>> getAllSubArticle(
+            @Header("userCookies") String userCookies,
+            @Query("userId") String userId
     );
 
 

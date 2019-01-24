@@ -24,9 +24,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class DiscoveryThemeViewModel extends BaseFragmentViewModel<DiscoveryThemeFragment,CenterActivity,List<ThemeEntity>> {
 
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onCreate() {
+        super.onCreate();
         getThemeInfo();
     }
 

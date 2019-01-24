@@ -227,5 +227,8 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
         super.onBackPressed();
     }
 
+    // TODO 返回后更新上一级资讯数据。
+    // TODO 有返回数据的Intent,更新上一级数据。
+    // TODO 分页加载（如何计算）、评论、我的收藏（接口、Android）
 
 }

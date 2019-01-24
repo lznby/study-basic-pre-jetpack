@@ -25,6 +25,7 @@ import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.configure.RouterConfigure;
 import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.ArticleDetailsRouterEntity;
+import com.lznby.jetpack.content.design.entity.HomePageRouterEntity;
 import com.lznby.jetpack.content.design.entity.PersonalHomePageEntity;
 import com.lznby.jetpack.content.design.view.AppBarLayoutStateChangeListener;
 import com.lznby.jetpack.content.design.vm.HomePageViewModel;
@@ -64,6 +65,11 @@ public class HomePageActivity extends BaseActivity<HomePageViewModel,PersonalHom
 
     private ArticleItemAdapter adapter;
 
+    /**
+     * 从上一个界面中传递过来决定加载谁的首页
+     */
+    private HomePageRouterEntity params;
+
 
     @Override
     protected int setLayout() {
@@ -72,6 +78,10 @@ public class HomePageActivity extends BaseActivity<HomePageViewModel,PersonalHom
 
     @Override
     protected void doOnCreate(@Nullable Bundle savedInstanceState) {
+
+        params = getIntent().getParcelableExtra(HomePageRouterEntity.KEY);
+        viewModel.setParams(params);
+
         setSupportActionBar(toolbar);
         // 设置状态栏透明
         BarUtils.setStatusBarAlpha(this,0);
