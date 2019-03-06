@@ -30,7 +30,7 @@ public class DiscoveryArticleViewModel extends BaseFragmentViewModel<DiscoveryAr
         getArticleInfo();
     }
 
-    private void getArticleInfo() {
+    public void getArticleInfo() {
         addDisposable(
                 IApplication.api.getAllArticle(CacheConfigure.getToken(getActivityContent()))
                 .compose(new RestfulTransformer<>())

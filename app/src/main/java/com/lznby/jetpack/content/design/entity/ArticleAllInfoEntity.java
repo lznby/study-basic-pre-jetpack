@@ -28,6 +28,10 @@ public class ArticleAllInfoEntity {
      * 是否收藏
      */
     private boolean love;
+    /**
+     * 评论(查询详情时才返回)
+     */
+    private List<CommentEntity> commentEntities;
 
     public UserBaseInfoEntity getUserBaseInfoEntity() {
         return userBaseInfoEntity;
@@ -67,5 +71,14 @@ public class ArticleAllInfoEntity {
 
     public void setLove(boolean love) {
         this.love = love;
+    }
+
+
+    public List<CommentEntity> getCommentEntities() {
+        return commentEntities;
+    }
+
+    public void setCommentEntities(List<CommentEntity> commentEntities) {
+        this.commentEntities = commentEntities;
     }
 }

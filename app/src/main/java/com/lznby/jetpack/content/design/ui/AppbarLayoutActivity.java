@@ -29,6 +29,6 @@ public class AppbarLayoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_appbar_layout);
         ButterKnife.bind(this);
         toolbar.setTitleTextColor(titleColor);
-        BarUtils.setStatusBarAlpha(this,0);
+        BarUtils.setStatusBarColor(this,0);
     }
 }

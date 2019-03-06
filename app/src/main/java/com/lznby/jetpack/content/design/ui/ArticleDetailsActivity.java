@@ -3,18 +3,25 @@ package com.lznby.jetpack.content.design.ui;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.base.BaseActivity;
+import com.lznby.jetpack.base.callback.SimpleCallback;
+import com.lznby.jetpack.content.design.adapter.CommentAdapter;
 import com.lznby.jetpack.content.design.configure.Configure;
+import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.ArticleDetailsRouterEntity;
 import com.lznby.jetpack.content.design.view.ImageTextView;
+import com.lznby.jetpack.content.design.view.RecyclerItemDecoration;
 import com.lznby.jetpack.content.design.view.nine.NineGridTestLayout;
 import com.lznby.jetpack.content.design.vm.ArticleDetailsViewModel;
 import com.lznby.jetpack.utils.FileUtils;
@@ -53,6 +60,13 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
     ImageTextView itvCommentCount;
     @BindView(R.id.itv_love_count)
     ImageTextView itvLoveCount;
+    @BindView(R.id.rv_comment)
+    RecyclerView rvComment;
+
+    /**
+     * 评论RecyclerViewAdapter
+     */
+    CommentAdapter adapter;
 
     /**
      * 资讯Intent传参
@@ -64,6 +78,34 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
      */
     StandardGSYVideoPlayer videoPlayer;
     OrientationUtils orientationUtils;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (videoPlayer != null) {
+            videoPlayer.onVideoResume();
+        }
+    }
+
+    /**
+     * 视屏播放器释放
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (videoPlayer != null) {
+            videoPlayer.onVideoPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GSYVideoManager.releaseAllVideos();
+        if (orientationUtils != null) {
+            orientationUtils.releaseListener();
+        }
+    }
 
     @Override
     protected int setLayout() {
@@ -85,6 +127,7 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
                 finish();
             }
         });
+
         // 根据类型设置动态加载资讯布局
         if (FileUtils.VIDEO.equals(params.getType())) {
             layoutView = View.inflate(this, R.layout.frame_video_player, null);
@@ -94,6 +137,8 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
             layoutView = View.inflate(this, R.layout.frame_image, null);
         }
         frameLayout.addView(layoutView);
+
+        initRecyclerView();
     }
 
     @Override
@@ -124,6 +169,11 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
             // 图片
             ((NineGridTestLayout) findViewById(R.id.rv_image)).setUrlList(entity.getFilePathEntities());
         }
+        if (entity.getCommentEntities()!=null) {
+            ToastUtils.shortToast(this,entity.getCommentEntities().get(0).getComment());
+        }
+        // 设置评论数据
+        adapter.setNewData(entity.getCommentEntities());
     }
 
     /**
@@ -161,6 +211,39 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
         videoPlayer.startPlayLogic();
     }
 
+    private void initRecyclerView() {
+        adapter = new CommentAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvComment.setLayoutManager(layoutManager);
+        rvComment.setAdapter(adapter);
+
+        // 设置RecyclerView的分割线
+        rvComment.addItemDecoration(new RecyclerItemDecoration());
+
+        // 设置空布局 todo 有时间加一个SwipeRefreshLayout
+        adapter.setEmptyView(EmptyRvPage.getEmptyView(rvComment, new SimpleCallback() {
+            @Override
+            public void doSomething() {
+                // 加载资讯
+                viewModel.getArticleByFileAttribution();
+            }
+        }));
+
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.itv_good_count:
+                        ToastUtils.shortToast(ArticleDetailsActivity.this,"点赞请求！");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+    }
+
     @OnClick({R.id.itv_love_count, R.id.itv_comment_count})
     public void onViewClick(View view) {
         switch (view.getId()) {
@@ -177,34 +260,6 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
                 break;
             default:
                 break;
-        }
-    }
-
-    /**
-     * 视屏播放器释放
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (videoPlayer != null) {
-            videoPlayer.onVideoPause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (videoPlayer != null) {
-            videoPlayer.onVideoResume();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        GSYVideoManager.releaseAllVideos();
-        if (orientationUtils != null) {
-            orientationUtils.releaseListener();
         }
     }
 
@@ -226,9 +281,5 @@ public class ArticleDetailsActivity extends BaseActivity<ArticleDetailsViewModel
         }
         super.onBackPressed();
     }
-
-    // TODO 返回后更新上一级资讯数据。
-    // TODO 有返回数据的Intent,更新上一级数据。
-    // TODO 分页加载（如何计算）、评论、我的收藏（接口、Android）
 
 }

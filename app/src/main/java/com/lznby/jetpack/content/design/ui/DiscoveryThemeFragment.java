@@ -1,6 +1,7 @@
 package com.lznby.jetpack.content.design.ui;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.ThemeEntity;
 import com.lznby.jetpack.content.design.entity.ThemePageRouterEntity;
 import com.lznby.jetpack.content.design.vm.DiscoveryThemeViewModel;
+import com.lznby.jetpack.utils.RefreshLayoutUtils;
 
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class DiscoveryThemeFragment extends BaseFragment<DiscoveryThemeViewModel
 
     @BindView(R.id.rv_theme)
     RecyclerView rvTheme;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
 
     private DiscoveryThemeAdapter adapter;
 
@@ -38,10 +42,18 @@ public class DiscoveryThemeFragment extends BaseFragment<DiscoveryThemeViewModel
     @Override
     protected void bindView(List<ThemeEntity> entity) {
         adapter.setNewData(entity);
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     protected void doOnCreateView() {
+        initRecyclerView();
+        initRefreshLayout();
+    }
+
+    private void initRecyclerView() {
         adapter = new DiscoveryThemeAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewModel.getActivityContent());
         rvTheme.setLayoutManager(layoutManager);
@@ -71,6 +83,15 @@ public class DiscoveryThemeFragment extends BaseFragment<DiscoveryThemeViewModel
                 Intent intent = new Intent(getContext(),ThemePageActivity.class);
                 intent.putExtra(ThemePageRouterEntity.KEY,new ThemePageRouterEntity(entity.getThemeId()));
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void initRefreshLayout() {
+        RefreshLayoutUtils.initRefreshLayout(refreshLayout, new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.getThemeInfo();
             }
         });
     }

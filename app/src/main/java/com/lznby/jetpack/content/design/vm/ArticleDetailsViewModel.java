@@ -39,7 +39,7 @@ public class ArticleDetailsViewModel extends BaseActivityViewModel<ArticleDetail
     /**
      * 获取资讯详情
      */
-    private void getArticleByFileAttribution() {
+    public void getArticleByFileAttribution() {
         addDisposable(
                 IApplication.api.getArticleByFileAttribution(CacheConfigure.getToken(activity.getActivity()), params.getFileAttribution())
                         .observeOn(AndroidSchedulers.mainThread())

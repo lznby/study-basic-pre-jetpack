@@ -50,6 +50,7 @@ public enum ApiUtils {
                 // 添加GET请求缓存,缓存大小为10Mib
                 .cache(CacheUtils.getCache(context, 20))
                 .build().newBuilder();
+        // 调试模式使用拦截器(打印请求信息)
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

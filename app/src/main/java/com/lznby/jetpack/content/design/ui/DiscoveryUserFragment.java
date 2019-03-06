@@ -1,6 +1,7 @@
 package com.lznby.jetpack.content.design.ui;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.HomePageRouterEntity;
 import com.lznby.jetpack.content.design.entity.UserBaseInfoEntity;
 import com.lznby.jetpack.content.design.vm.DiscoveryUserViewModel;
+import com.lznby.jetpack.utils.RefreshLayoutUtils;
 
 import java.util.List;
 
@@ -24,10 +26,12 @@ import butterknife.BindView;
  *
  * @author Lznby
  */
-public class DiscoveryUserFragment extends BaseFragment<DiscoveryUserViewModel,CenterActivity,List<UserBaseInfoEntity>> {
+public class DiscoveryUserFragment extends BaseFragment<DiscoveryUserViewModel, CenterActivity, List<UserBaseInfoEntity>> {
 
     @BindView(R.id.rv_user)
     RecyclerView rvUser;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
 
     private DiscoveryUserAdapter adapter;
 
@@ -39,10 +43,18 @@ public class DiscoveryUserFragment extends BaseFragment<DiscoveryUserViewModel,C
     @Override
     protected void bindView(List<UserBaseInfoEntity> entity) {
         adapter.setNewData(entity);
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     protected void doOnCreateView() {
+        initRecyclerView();
+        initRefreshLayout();
+    }
+
+    private void initRecyclerView() {
         adapter = new DiscoveryUserAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewModel.getActivityContent());
         rvUser.setLayoutManager(layoutManager);
@@ -61,9 +73,9 @@ public class DiscoveryUserFragment extends BaseFragment<DiscoveryUserViewModel,C
                 switch (view.getId()) {
                     case R.id.itv_love_count:
                         if (viewModel.getLiveData().getValue().get(position).isFollow()) {
-                            viewModel.unFollower(Integer.valueOf(viewModel.getLiveData().getValue().get(position).getUserId()),position);
+                            viewModel.unFollower(Integer.valueOf(viewModel.getLiveData().getValue().get(position).getUserId()), position);
                         } else {
-                            viewModel.follow(Integer.valueOf(viewModel.getLiveData().getValue().get(position).getUserId()),position);
+                            viewModel.follow(Integer.valueOf(viewModel.getLiveData().getValue().get(position).getUserId()), position);
                         }
                         break;
 
@@ -76,10 +88,19 @@ public class DiscoveryUserFragment extends BaseFragment<DiscoveryUserViewModel,C
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                UserBaseInfoEntity entity = (UserBaseInfoEntity)adapter.getData().get(position);
-                Intent intent = new Intent(getContext(),HomePageActivity.class);
-                intent.putExtra(HomePageRouterEntity.KEY,new HomePageRouterEntity(entity.getUserId()));
+                UserBaseInfoEntity entity = (UserBaseInfoEntity) adapter.getData().get(position);
+                Intent intent = new Intent(getContext(), HomePageActivity.class);
+                intent.putExtra(HomePageRouterEntity.KEY, new HomePageRouterEntity(entity.getUserId()));
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void initRefreshLayout() {
+        RefreshLayoutUtils.initRefreshLayout(refreshLayout, new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.getUserInfo();
             }
         });
     }

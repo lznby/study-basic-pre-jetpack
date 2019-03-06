@@ -84,7 +84,8 @@ public class HomePageActivity extends BaseActivity<HomePageViewModel,PersonalHom
 
         setSupportActionBar(toolbar);
         // 设置状态栏透明
-        BarUtils.setStatusBarAlpha(this,0);
+//        BarUtils.setStatusBarAlpha(this,0);
+        BarUtils.setStatusBarColor(this,0);
         toolbar.setNavigationIcon(R.mipmap.icon_left_arrows);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

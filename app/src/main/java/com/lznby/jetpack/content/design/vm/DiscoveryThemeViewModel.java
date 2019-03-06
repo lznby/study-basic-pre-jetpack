@@ -34,7 +34,7 @@ public class DiscoveryThemeViewModel extends BaseFragmentViewModel<DiscoveryThem
     /**
      * 获取所有主题
      */
-    private void getThemeInfo() {
+    public void getThemeInfo() {
         addDisposable(
                 IApplication.api.findAllTheme(CacheConfigure.getToken(getActivityContent()))
                 .compose(new RestfulTransformer<>())

@@ -133,7 +133,7 @@ public interface Configure {
         /**
          * default Glide loader url.
          */
-        String DEFAULT_IMAGE_URL = "http://39.108.138.218/IoT.jpg";
+        String DEFAULT_IMAGE_URL = "https://lznby-image.oss-cn-shenzhen.aliyuncs.com/25e68919031d1ec70342b795ce377d42.png";
         /**
          * default Glide loader res.
          */

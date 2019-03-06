@@ -38,7 +38,7 @@ public interface Api {
     /**
      * 公司局域网IP
      */
-    String HOST = "http://172.16.66.156:8080";
+    String HOST = "http://172.16.66.186:8080";
 
     /**
      * 阿里云公网IP
@@ -416,5 +416,28 @@ public interface Api {
             @Query("themeId") String themeId
     );
 
+    /**
+     * 用户订阅主题及关注用户下所有资讯(订阅模块接口)
+     *
+     * @param userCookies       用户Cookies
+     * @return                  订阅资讯
+     */
+    @GET("/article/getUserSubInfo")
+    Observable<BaseEntity<List<ArticleAllInfoEntity>>> getUserSubInfo(
+            @Header("userCookies") String userCookies
+    );
+
+    /**
+     * 轮播资讯
+     *
+     * @param userCookies       用户Cookies(可以省略)
+     * @param size              返回资讯数量
+     * @return                  轮播资讯
+     */
+    @GET("article/getBannerArticle")
+    Observable<BaseEntity<List<ArticleAllInfoEntity>>> getBannerArticle(
+            @Header("userCookies") String userCookies,
+            @Query("size") int size
+    );
 
 }

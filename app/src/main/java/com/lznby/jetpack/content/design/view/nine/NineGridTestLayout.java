@@ -35,7 +35,7 @@ public class NineGridTestLayout extends NineGridLayout {
         GlideApp.with(mContext)
                 .load(url.getFilePath())
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(imageView);
         return false;
     }
@@ -45,7 +45,7 @@ public class NineGridTestLayout extends NineGridLayout {
         GlideApp.with(mContext)
                 .load(url.getFilePath())
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(imageView);
     }
 

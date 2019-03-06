@@ -7,25 +7,39 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        app:title=""
-        app:titleTextColor="@color/colorWhite">
+        android:layout_height="match_parent">
 
-    </android.support.v7.widget.Toolbar>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这是HomeFragment"/>
+                <!-- 轮播图 -->
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="172dp"
+                    android:background="@color/colorWhite2"
+                    app:title_height="24dp"
+                    app:title_textcolor="@color/colorWhite2"
+                    app:title_textsize="15sp"/>
 
-    <ImageView
-        android:id="@+id/iv_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+                <com.lznby.jetpack.content.design.view.ScrollRecyclerView
+                    android:id="@+id/rv_article"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </com.lznby.jetpack.content.design.view.ScrollRecyclerView>
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginLeft="@dimen/dp_4"
+        android:padding="@dimen/dp_4"
+        android:id="@+id/civ_header"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@mipmap/icon_sex_what"/>
+
+    <LinearLayout
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试昵称"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:gravity="start"
+            android:text="这是一段测试评论啊啊啊啊啊啊测试评论啊啊测试"
+            android:layout_marginTop="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ss"-->
+            <!--android:layout_marginTop="@dimen/dp_4"-->
+            <!--android:layout_marginBottom="@dimen/dp_4"-->
+            <!--android:orientation="vertical"-->
+            <!--android:background="@color/colorWhite2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="30dp">-->
+
+        <!--</LinearLayout>-->
+
+        <RelativeLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:text="2018.09.12 23:23:32"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.lznby.jetpack.content.design.view.ImageTextView
+                android:id="@+id/itv_good_count"
+                style="@style/image_text_action"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@mipmap/icon_good_gray"
+                android:text="@string/default_count"
+                app:drawableLeftHeight="20dp"
+                app:drawableLeftWidth="20dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

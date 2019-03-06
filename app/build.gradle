@@ -73,23 +73,17 @@ dependencies {
     implementation "com.scwang.smartrefresh:SmartRefreshLayout:$smartRefresh"
     implementation "com.scwang.smartrefresh:SmartRefreshHeader:$smartRefresh"
 
-//    def gestuerVersion = '2.5.2'
-//    implementation "com.alexvasilkov:gesture-views:$gestuerVersion"
-
-//    def imageWatcherVersion = '1.1.0'
-//    implementation "com.github.iielse:ImageWatcher:$imageWatcherVersion"
-
     //
     def likeVersion= '0.2.3'
     implementation "com.github.jd-alexander:LikeButton:$likeVersion"
 
-    // animation
-//    def lottieVersion = '2.8.0'
-//    implementation "com.airbnb.android:lottie:$lottieVersion"
+    // 轮播图
+    def bannerVersion = '1.4.10'
+    implementation "com.youth.banner:banner:$bannerVersion"
 
-    // https://github.com/DingMouRen/LayoutManagerGroup
-//    def dingMouRenVersion = '1e6f4f96eb'
-//    implementation "com.github.DingMouRen:LayoutManagerGroup:$dingMouRenVersion"
+    def loadingDialogVersion = 'v1.0.4'
+    // loading dialog
+    implementation "com.github.ForgetAll:LoadingDialog:$loadingDialogVersion"
 
     //---------------------------------- Supper UI-------------------------------------
 
@@ -112,10 +106,6 @@ dependencies {
     //---------------------------------OSS--------------------------------------------------
     def ossVersion = '2.9.1'
     implementation "com.aliyun.dpa:oss-android-sdk:$ossVersion"
-//    def okhttpVersion = '3.11.0'
-//    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
-//    def okioVersion = '1.14.0'
-//    implementation "com.squareup.okio:okio:$okioVersion"
 
     //---------------------------------Pre-AndroidX--------------------------------------------
 
@@ -145,8 +135,6 @@ dependencies {
     // use kapt for Kotlin
     // optional - RxJava support for Room
     implementation "android.arch.persistence.room:rxjava2:$room_version"
-    // optional - Guava support for Room, including Optional and ListenableFuture
-//    implementation "android.arch.persistence.room:guava:$room_version"
     // Test helpers
     testImplementation "android.arch.persistence.room:testing:$room_version"
 
@@ -192,7 +180,7 @@ dependencies {
 
     // utilCode
     // https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
-    def utilCodeVersion = '1.21.0'
+    def utilCodeVersion = '1.23.4'
     implementation "com.blankj:utilcode:$utilCodeVersion"
 
     //ARouter

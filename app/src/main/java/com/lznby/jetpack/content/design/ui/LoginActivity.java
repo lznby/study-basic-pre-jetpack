@@ -1,6 +1,7 @@
 package com.lznby.jetpack.content.design.ui;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatEditText;
@@ -12,10 +13,12 @@ import com.blankj.utilcode.util.BarUtils;
 import com.lznby.jetpack.R;
 import com.lznby.jetpack.base.BaseActivity;
 import com.lznby.jetpack.base.BaseEntity;
+import com.lznby.jetpack.content.design.configure.Configure;
 import com.lznby.jetpack.content.design.entity.LoginEntity;
 import com.lznby.jetpack.content.design.params.LoginParams;
 import com.lznby.jetpack.content.design.vm.LoginViewModel;
 import com.lznby.jetpack.utils.LoaderImageUtils;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,6 +39,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel, BaseEntity<Login
     AppCompatEditText mEtPassword;
     @BindView(R.id.civ_header)
     CircleImageView civHeader;
+    /**
+     * 加载控件
+     */
+    LoadingDialog mLoadingDialog;
 
     @Override
     protected int setLayout() {
@@ -45,7 +52,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel, BaseEntity<Login
     @Override
     protected void doOnCreate(@Nullable Bundle savedInstanceState) {
         // 设置状态栏透明
-        BarUtils.setStatusBarAlpha(this,0);
+        BarUtils.setStatusBarColor(this,0);
         // 为view增加MarginTop为状态栏高度
         BarUtils.addMarginTopEqualStatusBarHeight(clBody);
         // 加载高斯模糊背景
@@ -57,6 +64,27 @@ public class LoginActivity extends BaseActivity<LoginViewModel, BaseEntity<Login
 
     @Override
     protected void bindView(BaseEntity<LoginEntity> entity) {
+        if (entity.getCode() == Configure.ResponseCode.SUCCESS) {
+            mLoadingDialog.loadSuccess();
+            // 延迟1500ms后跳转
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mLoadingDialog.close();
+                    finish();
+                }
+            },3000);
+
+        } else {
+            mLoadingDialog.loadFailed();
+            // 延迟1500ms后关闭Dialog
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mLoadingDialog.close();
+                }
+            },3000);
+        }
 
     }
 
@@ -68,6 +96,14 @@ public class LoginActivity extends BaseActivity<LoginViewModel, BaseEntity<Login
                 params.setUserNickName(mEtUsername.getText().toString().trim());
                 params.setUserPassword(mEtPassword.getText().toString().trim());
                 viewModel.login(params);
+
+                // 初始化loading dialog
+                mLoadingDialog = new LoadingDialog(this);
+                mLoadingDialog.setLoadingText("登录中")
+                        .setSuccessText("登录成功")
+                        .setFailedText("登录失败")
+                        .setInterceptBack(true)
+                        .show();
                 break;
             case R.id.bt_register:
                 RegisterActivity.startActivity(this);

@@ -83,7 +83,8 @@ public abstract class BaseFragment<VM extends BaseFragmentViewModel,V extends Ba
 
     /**
      * do something when LiveData data was be changed
-     * @param entity
+     *
+     * @param entity default LiveData's data.
      */
     abstract protected void bindView(E entity);
 
@@ -93,7 +94,7 @@ public abstract class BaseFragment<VM extends BaseFragmentViewModel,V extends Ba
     protected abstract void doOnCreateView();
 
     /**
-     * 获取 T.class
+     * get T.class
      *
      * @return
      */

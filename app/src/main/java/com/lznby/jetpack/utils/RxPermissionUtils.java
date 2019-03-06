@@ -4,10 +4,8 @@ import android.Manifest;
 
 import com.lznby.jetpack.base.BaseActivity;
 import com.lznby.jetpack.base.BaseFragment;
-import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import io.reactivex.functions.Consumer;
 import timber.log.Timber;
 
 /**
@@ -36,22 +34,18 @@ public class RxPermissionUtils {
                                 Manifest.permission.CALL_PHONE,
                                 Manifest.permission.SEND_SMS
                         )
-                        .subscribe(new Consumer<Permission>() {
-                                       @Override
-                                       public void accept(Permission permission) throws Exception {
-                                           if (permission.granted) {
-                                               // 用户已经同意该权限
-                                               Timber.d("%s is granted.", permission.name);
-                                           } else if (permission.shouldShowRequestPermissionRationale) {
-                                               // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                                               Timber.d("%s is denied. More info should be provided.", permission.name);
-                                           } else {
-                                               // 用户拒绝了该权限，并且选中『不再询问』
-                                               Timber.d("%s is denied.", permission.name);
-                                           }
-                                       }
-                                   }
-                        )
+                        .subscribe(permission -> {
+                            if (permission.granted) {
+                                // 用户已经同意该权限
+                                Timber.d("%s is granted.", permission.name);
+                            } else if (permission.shouldShowRequestPermissionRationale) {
+                                // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                                Timber.d("%s is denied. More info should be provided.", permission.name);
+                            } else {
+                                // 用户拒绝了该权限，并且选中『不再询问』
+                                Timber.d("%s is denied.", permission.name);
+                            }
+                        })
         );
     }
 
@@ -75,22 +69,18 @@ public class RxPermissionUtils {
                                 Manifest.permission.CALL_PHONE,
                                 Manifest.permission.SEND_SMS
                         )
-                        .subscribe(new Consumer<Permission>() {
-                                       @Override
-                                       public void accept(Permission permission) throws Exception {
-                                           if (permission.granted) {
-                                               // 用户已经同意该权限
-                                               Timber.d("%s is granted.", permission.name);
-                                           } else if (permission.shouldShowRequestPermissionRationale) {
-                                               // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                                               Timber.d("%s is denied. More info should be provided.", permission.name);
-                                           } else {
-                                               // 用户拒绝了该权限，并且选中『不再询问』
-                                               Timber.d("%s is denied.", permission.name);
-                                           }
-                                       }
-                                   }
-                        )
+                        .subscribe(permission -> {
+                            if (permission.granted) {
+                                // 用户已经同意该权限
+                                Timber.d("%s is granted.", permission.name);
+                            } else if (permission.shouldShowRequestPermissionRationale) {
+                                // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                                Timber.d("%s is denied. More info should be provided.", permission.name);
+                            } else {
+                                // 用户拒绝了该权限，并且选中『不再询问』
+                                Timber.d("%s is denied.", permission.name);
+                            }
+                        })
         );
     }
 }

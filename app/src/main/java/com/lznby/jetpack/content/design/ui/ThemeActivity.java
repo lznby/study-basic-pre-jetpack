@@ -52,15 +52,16 @@ public class ThemeActivity extends BaseActivity<ThemeViewModel,List<ThemeEntity>
     protected void doOnCreate(@Nullable Bundle savedInstanceState) {
         params = getIntent().getParcelableExtra(ThemeRouterEntity.KEY);
         viewModel.setParams(params);
+        initToolbar();
+        initRecyclerView();
+    }
 
-        toolbar.setNavigationIcon(R.mipmap.icon_left_arrows);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    protected void bindView(List<ThemeEntity> entity) {
+        adapter.setNewData(entity);
+    }
 
+    private void initRecyclerView() {
         adapter = new ThemeAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvTheme.setLayoutManager(layoutManager);
@@ -94,11 +95,15 @@ public class ThemeActivity extends BaseActivity<ThemeViewModel,List<ThemeEntity>
                 startActivity(intent);
             }
         });
-
     }
 
-    @Override
-    protected void bindView(List<ThemeEntity> entity) {
-        adapter.setNewData(entity);
+    private void initToolbar() {
+        toolbar.setNavigationIcon(R.mipmap.icon_left_arrows);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

@@ -49,6 +49,8 @@ public class MainDiscoveryFragment extends BaseFragment<DiscoveryViewModel,Cente
         // 设置Viewpager的Adapter
         adapter = new DiscoveryFragmentAdapter(getFragmentManager());
         vpContainer.setAdapter(adapter);
+        // 设置预加载半径为2
+        vpContainer.setOffscreenPageLimit(2);
 
         // 设置Viewpager与TabLayout联动.
         tlDiscovery.setupWithViewPager(vpContainer);

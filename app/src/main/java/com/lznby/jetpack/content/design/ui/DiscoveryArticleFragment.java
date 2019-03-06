@@ -1,6 +1,7 @@
 package com.lznby.jetpack.content.design.ui;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.lznby.jetpack.content.design.configure.EmptyRvPage;
 import com.lznby.jetpack.content.design.entity.ArticleAllInfoEntity;
 import com.lznby.jetpack.content.design.entity.ArticleDetailsRouterEntity;
 import com.lznby.jetpack.content.design.vm.DiscoveryArticleViewModel;
+import com.lznby.jetpack.utils.RefreshLayoutUtils;
 import com.lznby.jetpack.utils.ToastUtils;
 
 import java.util.List;
@@ -28,6 +30,8 @@ public class DiscoveryArticleFragment extends BaseFragment<DiscoveryArticleViewM
 
     @BindView(R.id.rv_article)
     RecyclerView rvArticle;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout refreshLayout;
 
     private DiscoveryArticleAdapter adapter;
 
@@ -39,10 +43,18 @@ public class DiscoveryArticleFragment extends BaseFragment<DiscoveryArticleViewM
     @Override
     protected void bindView(List<ArticleAllInfoEntity> entity) {
         adapter.setNewData(entity);
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     protected void doOnCreateView() {
+        initRecyclerView();
+        initRefreshLayout();
+    }
+
+    private void initRecyclerView() {
         adapter = new DiscoveryArticleAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewModel.getActivityContent());
         rvArticle.setLayoutManager(layoutManager);
@@ -77,6 +89,15 @@ public class DiscoveryArticleFragment extends BaseFragment<DiscoveryArticleViewM
                 Intent intent = new Intent(getContext(),ArticleDetailsActivity.class);
                 intent.putExtra(ArticleDetailsRouterEntity.KEY,new ArticleDetailsRouterEntity(entity.getArticleEntity().getType(),entity.getArticleEntity().getFileAttribution()));
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void initRefreshLayout() {
+        RefreshLayoutUtils.initRefreshLayout(refreshLayout, new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.getArticleInfo();
             }
         });
     }

@@ -35,7 +35,7 @@ public class LoaderImageUtils {
                 .load(url)
                 .placeholder(res)
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(view);
     }
 
@@ -57,7 +57,7 @@ public class LoaderImageUtils {
                 .load(res)
                 .apply(RequestOptions.bitmapTransform(multiTransformation))
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(view);
     }
 
@@ -72,7 +72,7 @@ public class LoaderImageUtils {
                 .with(context)
                 .load(res)
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(view);
     }
 
@@ -94,7 +94,7 @@ public class LoaderImageUtils {
                 .load(url)
                 .placeholder(res)
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(view);
     }
 
@@ -109,7 +109,7 @@ public class LoaderImageUtils {
         GlideApp.with(context)
                 .load(url)
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(view);
     }
 
@@ -125,7 +125,7 @@ public class LoaderImageUtils {
                 .load(url)
                 .centerCrop()
                 .skipMemoryCache(false)
-                .dontAnimate()
+//                .dontAnimate()
                 .into(view);
     }
 

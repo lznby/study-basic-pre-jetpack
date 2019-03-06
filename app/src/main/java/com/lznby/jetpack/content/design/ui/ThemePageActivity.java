@@ -78,7 +78,8 @@ public class ThemePageActivity extends BaseActivity<ThemePageViewModel,ThemeHome
 
         setSupportActionBar(toolbar);
         // 设置状态栏透明
-        BarUtils.setStatusBarAlpha(this,0);
+//        BarUtils.setStatusBarAlpha(this,0);
+        BarUtils.setStatusBarColor(this,0);
         toolbar.setNavigationIcon(R.mipmap.icon_left_arrows);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
